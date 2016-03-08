@@ -1,6 +1,10 @@
 import java.util.*;
 import java.util.Random;
 import java.util.Collections;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 
 public class WeatherModel {
@@ -13,7 +17,7 @@ public class WeatherModel {
 	ArrayList<Integer> temperatures = new ArrayList<Integer>();
 	ArrayList<String> weather = new ArrayList<String>();
 
-	//Numeric representation of today's dya of the week
+	//Numeric representation of today's day of the week
 	int today;
 	//String representation
 	String todayString;
@@ -52,8 +56,20 @@ public class WeatherModel {
 	ArrayList<String> dayOverview = new ArrayList<String>();
 	
 
+	Date date;
+    String theDate;
+    String theDay;
+
 	public WeatherModel(int numberOfEvents){
 		location = "London";
+
+		//Find the current date.
+        DateFormat dateFormat = new SimpleDateFormat("EEE, dd, MMMM, YYYY");
+        date = new Date();
+        theDate = dateFormat.format(date);
+        theDay = dateFormat.format(date).substring(0,3);
+        setWeekDay(theDay);
+
 
 		//Here is the Weather API that gets weather for london
 		WeatherAPI weather = new WeatherAPI("44418");
@@ -86,6 +102,14 @@ public class WeatherModel {
 
 	public void setLocation(String newLocation){
 		location = newLocation;
+	}
+
+	public String getDate(){
+		return theDate;
+	}
+
+	public String getDay(){
+		return theDay;
 	}
 
 

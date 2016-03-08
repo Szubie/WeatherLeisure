@@ -9,11 +9,6 @@ import java.io.*;
 import javax.imageio.ImageIO;
 import java.awt.event.*;
 
-import java.util.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 
 public class WeatherView{
 
@@ -73,18 +68,14 @@ public class WeatherView{
 
         weather.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //Find the current date.
-        DateFormat dateFormat = new SimpleDateFormat("EEE, dd, MMMM, YYYY");
-        Date date = new Date();
-        String theDate = dateFormat.format(date);
-        String theDay = dateFormat.format(date).substring(0,3);
+        String theDay; 
+
 
         if(device == 1){
             //Here we start the program in the tablet mode
             imagesFolder = "tabletImages/";
             weather.setSize(1024,768);
             model = new WeatherModel(4);
-            model.setWeekDay(theDay);
             fontSize = 30.0f;
             imageLabelFloat = 15.0f;
             settingsFont = 20.0f;
@@ -95,7 +86,6 @@ public class WeatherView{
             //Phone device screensize
             weather.setSize(WIDTH,HEIGHT);
             model = new WeatherModel(3);
-            model.setWeekDay(theDay);
         }
 
 
@@ -389,7 +379,7 @@ public class WeatherView{
 
         //here we populate our days panel
         //daysPanel.add(Box.createRigidArea(new Dimension(20,0)));
-        daysPanel.add(monday);
+        daysPanel.add(tuesday);
         daysPanel.add(wednesday);
         daysPanel.add(thursday);
         daysPanel.add(friday);
