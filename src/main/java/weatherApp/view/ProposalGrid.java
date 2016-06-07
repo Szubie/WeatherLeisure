@@ -87,9 +87,7 @@ public class ProposalGrid extends AppScreen {
 
         for(weatherApp.model.eventRecommender.Event ev : suggestEvents){
             String name = ev.getName();
-            System.out.println("Event name: "+name);
             String path = ev.getPicPath();
-            System.out.println("Path: "+path);
             eventGrid.add(createIconLabel(name, path));
 
         }
