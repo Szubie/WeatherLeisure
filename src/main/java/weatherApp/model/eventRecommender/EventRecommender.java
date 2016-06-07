@@ -25,9 +25,6 @@ public class EventRecommender{
 	//Currently doesn't do anything
 	private Boolean defaultLocation;
 
-	//True when user doesn't select any of the refining options
-	private Boolean notSpecific;
-
 	//Number of suggestions per time in the day
 	private int eventsPerRow;
 
@@ -47,13 +44,13 @@ public class EventRecommender{
 		this.weatherForecast = weatherForecast;
 		this.eventsPerRow = eventsPerRow;
 		createEvents();
-		culture = false;
-		entertainment = false;
-		relaxation = false;
-		shopping = false;
-		sport= false;
-		eating = false;
-		drinking = false;
+		culture = true;
+		entertainment = true;
+		relaxation = true;
+		shopping = true;
+		sport= true;
+		eating = true;
+		drinking = true;
 	}
 
 
@@ -77,7 +74,7 @@ public class EventRecommender{
 
 				if(count < eventsPerRow){
 
-					if(matchRequirements(event) || notSpecific()){
+					if(matchRequirements(event)){
 
 						events.add(event);
 						count++;
@@ -195,7 +192,7 @@ public class EventRecommender{
 		thames.culture();
 		dryWeather.add(thames);
 
-		Event radio = new Event("Radio Bar", "radiobar.jpg");
+		Event radio = new Event("Radio Bar", "radioBar.jpg");
 		radio.eating();
 		radio.relaxation();
 		radio.drinking();
@@ -217,17 +214,6 @@ public class EventRecommender{
 
 	}
 
-	private Boolean notSpecific(){
-
-		if(culture){ return false; }
-		if(entertainment){ return false; }
-		if(relaxation){ return false; }
-		if(shopping){ return false; }
-		if(sport){return false; }
-		if(eating){ return false; }
-		if(drinking){ return false; }
-		return true;
-	}
 
 	//Set events tags methods
 	public void setCulture(Boolean value){
