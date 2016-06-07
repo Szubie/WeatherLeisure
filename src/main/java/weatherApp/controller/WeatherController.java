@@ -33,21 +33,22 @@ public class WeatherController{
 		addProposalButtonListener(view);
 		addSettingsButtonListener(view);
 		addDaySelectionButtonListeners(view);
+		addSettingsPageListeners(view);
 	}
 
 	public void addDaySelectionButtonListeners(final WeatherView view){
-		view.addDaySelectionButtonListeners(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-	            view.disSelectAll(view.daysPanel);
-	            JButton but = (JButton) e.getSource();
-	            String weekDay = but.getText();
-	            //make a call to the Weather Model to set the week day accordingly
-	            model.getWeekDays().setWeekDay(weekDay);
-	            but.setBackground(view.darkGrey);
+		view.proposalGrid.addDaySelectionButtonListeners(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				view.proposalGrid.disSelectAll(view.proposalGrid.daysPanel);
+				JButton but = (JButton) e.getSource();
+				String weekDay = but.getText();
+				//make a call to the Weather Model to set the week day accordingly
+				model.getWeekDays().setWeekDay(weekDay);
+				but.setBackground(view.darkGrey);
 				but.setForeground(Color.WHITE);
-	            but.setOpaque(true);
-	            view.updateProposalGrid();
-        	}
+				but.setOpaque(true);
+				view.proposalGrid.updateProposalGrid();
+			}
 		});
 	}
 
@@ -88,7 +89,7 @@ public class WeatherController{
     	view.addProposalButtonListener(
     		new ActionListener(){
 	            public void actionPerformed(ActionEvent e){
-		            view.updateProposalGrid();
+		            view.proposalGrid.updateProposalGrid();
 		            view.hideSettings();
 		            view.hideWeatherMain();
 		            view.showProposal();
@@ -106,4 +107,105 @@ public class WeatherController{
 		        }
 	        });
 	}
+
+	public void addSettingsPageListeners(final WeatherView view){
+		view.settingsScreen.addCultureBoxListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.SELECTED) {
+					model.getEventRecommender().setCulture(true);
+					view.proposalGrid.updateProposalGrid();
+
+				} else {
+					model.getEventRecommender().setCulture(false);
+					view.proposalGrid.updateProposalGrid();
+
+				};
+			}
+		});
+
+		view.settingsScreen.addEntertainmentBoxListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					model.getEventRecommender().setEntertainment(true);
+					view.proposalGrid.updateProposalGrid();
+
+				} else {
+					model.getEventRecommender().setEntertainment(false);
+					view.proposalGrid.updateProposalGrid();
+
+				};
+			}
+		});
+
+		view.settingsScreen.addRelaxationBoxListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					model.getEventRecommender().setRelaxation(true);
+					view.proposalGrid.updateProposalGrid();
+				} else {
+					model.getEventRecommender().setRelaxation(false);
+					view.proposalGrid.updateProposalGrid();
+				};
+			}
+		});
+
+		view.settingsScreen.addShoppingBoxListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					model.getEventRecommender().setShopping(true);
+					view.proposalGrid.updateProposalGrid();
+				} else {
+					model.getEventRecommender().setShopping(false);
+					view.proposalGrid.updateProposalGrid();
+				};
+			}
+		});
+
+		view.settingsScreen.addSportBoxListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					model.getEventRecommender().setSport(true);
+					view.proposalGrid.updateProposalGrid();
+				} else {
+					model.getEventRecommender().setSport(false);
+					view.proposalGrid.updateProposalGrid();
+				};
+			}
+		});
+
+		view.settingsScreen.addEatingBoxListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					model.getEventRecommender().setEating(true);
+					view.proposalGrid.updateProposalGrid();
+				} else {
+					model.getEventRecommender().setEating(false);
+					view.proposalGrid.updateProposalGrid();
+				};
+			}
+		});
+
+		view.settingsScreen.addDrinkingBoxListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.SELECTED) {
+					model.getEventRecommender().setDrinking(true);
+					view.proposalGrid.updateProposalGrid();
+				} else {
+					model.getEventRecommender().setDrinking(false);
+					view.proposalGrid.updateProposalGrid();
+				};
+			}
+		});
+
+
+	}
+
+
 }

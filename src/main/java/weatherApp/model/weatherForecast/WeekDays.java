@@ -9,13 +9,7 @@ public class WeekDays{
 
 	private String[] daysOfWeek = new String[5];
 	private String weekDay;
-	private String firstDay;
-	private String secondDay;
-	private String thirdDay;
-	private String fourthDay;
 
-	//Numeric representation of today's day of the week
-	private int today;
 
 	public static void main(String[] args){
 		WeekDays test = new WeekDays();
