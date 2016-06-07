@@ -29,7 +29,7 @@ public abstract class AppScreen extends JPanel {
     int afternoonFont = 12;
     int eveningFont = 12;
 
-    //Create a new clour to use in the app
+    //Create a new colour to use in the app
     Color niceBlue = new Color(102, 153, 255);
     public Color darkGrey = new Color(102, 102, 153);
     Color darkBlue = new Color(60, 110, 190);

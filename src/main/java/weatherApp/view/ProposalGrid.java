@@ -1,7 +1,6 @@
 package weatherApp.view;
 
 import weatherApp.model.WeatherViewModel;
-import weatherApp.model.eventRecommender.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,13 +11,19 @@ import java.util.ArrayList;
  * Created by Benjy on 07/06/2016.
  */
 public class ProposalGrid extends AppScreen {
-    WeatherViewModel model;
+    private WeatherViewModel model;
 
     public JPanel daysPanel;
 
     JPanel midPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
     JPanel timePanel = new JPanel();
     JPanel eventGrid = new JPanel(new GridLayout(3, 3, 7, 7));
+
+    public JButton today;
+    JButton firstDay;
+    JButton secondDay;
+    JButton thirdDay;
+    JButton fourthDay;
 
     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
@@ -31,27 +36,25 @@ public class ProposalGrid extends AppScreen {
         daysPanel = new JPanel(new FlowLayout());
         daysPanel.setBackground(Color.WHITE);
 
-        //Monday selected by default
-        JButton monday = new JButton(model.getWeekDays().getWeekDay());
-        monday = formatButton(monday);
-        monday.setBackground(darkGrey);
-        monday.setForeground(Color.WHITE);
-        monday.setOpaque(true);
-        JButton tuesday = new JButton(model.getWeekDays().getFirstDay());
-        tuesday = formatButton(tuesday);
-        JButton wednesday = new JButton(model.getWeekDays().getSecondDay());
-        wednesday = formatButton(wednesday);
-        JButton thursday = new JButton(model.getWeekDays().getThirdDay());
-        thursday = formatButton(thursday);
-        JButton friday = new JButton(model.getWeekDays().getFourthDay());
-        friday = formatButton(friday);
+        //Today selected by default through controller
+        today = new JButton(model.getWeekDays().getWeekDay());
+        today = formatButton(today);
+        firstDay = new JButton(model.getWeekDays().getFirstDay());
+        firstDay = formatButton(firstDay);
+        secondDay = new JButton(model.getWeekDays().getSecondDay());
+        secondDay = formatButton(secondDay);
+        thirdDay = new JButton(model.getWeekDays().getThirdDay());
+        thirdDay = formatButton(thirdDay);
+        fourthDay = new JButton(model.getWeekDays().getFourthDay());
+        fourthDay = formatButton(fourthDay);
 
 
-        //here we populate our days panel
-        daysPanel.add(monday);
-        daysPanel.add(tuesday);
-        daysPanel.add(wednesday);
-        daysPanel.add(thursday);
+        //Populate the days panel
+        daysPanel.add(today);
+        daysPanel.add(firstDay);
+        daysPanel.add(secondDay);
+        daysPanel.add(thirdDay);
+        daysPanel.add(fourthDay);
 
         timePanel.setLayout(new BoxLayout(timePanel, BoxLayout.Y_AXIS));
         timePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -81,8 +84,6 @@ public class ProposalGrid extends AppScreen {
         timePanel.setBackground(Color.WHITE);
         midPanel.add(timePanel);
 
-        //for now we will have an array with all the events in one place
-        //String[] events = {"britishMuseum.jpg", "bigBen.jpg", "primeroseHill.jpg","britishMuseum.jpg", "bigBen.jpg", "primeroseHill.jpg","britishMuseum.jpg", "bigBen.jpg", "primeroseHill.jpg"};
         ArrayList<weatherApp.model.eventRecommender.Event> suggestEvents = model.getEventRecommender().suggestEvents();
 
         for(weatherApp.model.eventRecommender.Event ev : suggestEvents){
@@ -105,7 +106,6 @@ public class ProposalGrid extends AppScreen {
     }
 
     public void addDaySelectionButtonListeners(ActionListener listener){
-        //ArrayList<JButton> buttons = new ArrayList<JButton>();
         for(int i=0; i<4; i++){
             JPanel dayPanel = (JPanel) this.getComponents()[0];
             JButton button = (JButton) dayPanel.getComponents()[i];
@@ -139,7 +139,7 @@ public class ProposalGrid extends AppScreen {
     //Once the day button is pressed we update the proposal events
     public void updateProposalGrid(){
 
-        //Get the weatehr forecast break down for the current day (11am, 3pm, 7pm))
+        //Get the weather forecast break down for the current day (11am, 3pm, 7pm))
         String[] timeWeather = model.getWeatherForecast().getWeatherInTheDay();
 
 
@@ -162,8 +162,6 @@ public class ProposalGrid extends AppScreen {
 
 
         eventGrid.removeAll();
-        //for now we will have an array with all the events in one place
-        //String[] events = {"britishMuseum.jpg", "bigBen.jpg", "primeroseHill.jpg","britishMuseum.jpg", "bigBen.jpg", "primeroseHill.jpg","britishMuseum.jpg", "bigBen.jpg", "primeroseHill.jpg"};
         ArrayList<weatherApp.model.eventRecommender.Event> suggestEvents = model.getEventRecommender().suggestEvents();
 
         for(weatherApp.model.eventRecommender.Event ev : suggestEvents){

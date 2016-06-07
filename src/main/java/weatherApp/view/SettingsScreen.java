@@ -1,12 +1,8 @@
 package weatherApp.view;
 
-import weatherApp.model.WeatherViewModel;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.EventListener;
 
 /**
  * Created by Benjy on 07/06/2016.

@@ -19,10 +19,11 @@ public class WeatherApplication{
                 }else{
                 	WeatherViewModel model = new WeatherViewModel(3);
                     WeatherView view = new WeatherView(model, 0);
-                    WeatherView view2 = new WeatherView(model, 0);
 					//Attach the weatherApp.controller to connect this weatherApp.view and the weatherApp.model
         			WeatherController controller = new WeatherController(view, model);
-                    controller.addView(view2);
+
+                    //WeatherView view2 = new WeatherView(model, 0);
+                    //controller.addView(view2);
                 }
 
             }
