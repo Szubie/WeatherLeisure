@@ -3,6 +3,7 @@ package weatherApp.model.weatherForecast;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.io.*;
 
@@ -20,6 +21,7 @@ public class ListOfCities{
 			}
 		}
 		catch(Exception e){
+			e.printStackTrace();
 			System.out.println("Couldn't find the file with the list of cities.");
 		}
 		finally {
@@ -29,6 +31,12 @@ public class ListOfCities{
 
 	public boolean contains(String city){
 		return cityList.contains(city);
+	}
+
+	public String[] getArrayOfCities(){
+		String[] cities =  cityList.toArray(new String[cityList.size()]);
+		Arrays.sort(cities);
+		return cities;
 	}
 
 	public static void main(String[] args){

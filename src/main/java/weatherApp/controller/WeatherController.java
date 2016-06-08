@@ -5,6 +5,9 @@ import weatherApp.view.WeatherView;
 
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
+import java.awt.Color;
 import java.util.ArrayList;
 
 
@@ -53,10 +56,24 @@ public class WeatherController{
 	public void addSearchBarActionListener(final WeatherView view){
 	    //Here is an action listener for the text box to update the location in the weatherApp.model
         view.weatherScreen.addSearchBarListener(
-				new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						String text = view.weatherScreen.locationEntry.getText();
-						String cityName = view.weatherScreen.locationEntry.getText();
+				new PopupMenuListener() {
+
+					@Override
+					public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+					}
+
+
+					@Override
+					public void popupMenuCanceled(PopupMenuEvent e) {
+					}
+
+					@Override
+					public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+					JComboBox<String> source = (JComboBox) e.getSource();
+						String text = (String) source.getSelectedItem();
+						String cityName = (String) source.getSelectedItem();
+						System.out.println("text: " + text);
+						System.out.println("cityName " + cityName);
 						if (text.contains(",")) {
 							String[] splitText = text.split(",");
 							cityName = splitText[0];
@@ -89,7 +106,6 @@ public class WeatherController{
 		            view.proposalGrid.updateProposalGrid();
 		            view.hideSettings();
 		            view.hideWeatherMain();
-					//Set the current day button to be selected by default
 					JRootPane rootPane = view.frame.getRootPane();
 					rootPane.setDefaultButton(view.proposalGrid.today);
 		            view.showProposal();
