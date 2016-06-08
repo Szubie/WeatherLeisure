@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.ArrayList;
 
 
-public class EventRecommender{
+public class EventRecommender {
 
 	private WeatherForecast weatherForecast;
 
@@ -33,14 +33,14 @@ public class EventRecommender{
 	private ArrayList<Event> wetWeather = new ArrayList<Event>();
 
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		EventRecommender test = new EventRecommender(new WeatherForecast("London, UK"), 3);
 		ArrayList<Event> testArray = test.suggestEvents();
 		System.out.println(testArray.size());
 	}
 
 
-	public EventRecommender(WeatherForecast weatherForecast, int eventsPerRow){
+	public EventRecommender(WeatherForecast weatherForecast, int eventsPerRow) {
 		this.weatherForecast = weatherForecast;
 		this.eventsPerRow = eventsPerRow;
 		createEvents();
@@ -48,14 +48,13 @@ public class EventRecommender{
 		entertainment = true;
 		relaxation = true;
 		shopping = true;
-		sport= true;
+		sport = true;
 		eating = true;
 		drinking = true;
 	}
 
-
 	//Model returns 9 events for the given day, 3 per time in the day
-	public ArrayList<Event> suggestEvents(){
+	public ArrayList<Event> suggestEvents() {
 
 		//int dayNum = getDayInt(weekDay);
 		//String[] weatherInDay = weatherForDay.get(dayNum);
@@ -63,18 +62,18 @@ public class EventRecommender{
 
 		ArrayList<Event> events = new ArrayList<Event>();
 
-		for (String dayWeather : weatherInDay){
-			int count=0;
+		for (String dayWeather : weatherInDay) {
+			int count = 0;
 
 			ArrayList<Event> suitableEvents = getEventsForWeather(dayWeather);
 			//Shuffle to randomise events, in order for greater variety.
 			Collections.shuffle(suitableEvents);
 
-			for(Event event : suitableEvents){
+			for (Event event : suitableEvents) {
 
-				if(count < eventsPerRow){
+				if (count < eventsPerRow) {
 
-					if(matchRequirements(event)){
+					if (matchRequirements(event)) {
 
 						events.add(event);
 						count++;
@@ -91,74 +90,83 @@ public class EventRecommender{
 
 	}
 
-	private ArrayList<Event> getEventsForWeather(String weather){
+	private ArrayList<Event> getEventsForWeather(String weather) {
 		switch (weather) {
-            case "Sun":  return dryWeather;
-            case "Rain":  return wetWeather;
-            case "Cloud":  return wetWeather;
-            case "PartCloud":  return wetWeather;
-            case "Snow":  return wetWeather;
-            case "Thunder":  return wetWeather;
-            case "Hail":  return wetWeather;
-           	case "Fog":  return wetWeather;
-            default: return dryWeather;
+			case "Sun":
+				return dryWeather;
+			case "Rain":
+				return wetWeather;
+			case "Cloud":
+				return wetWeather;
+			case "PartCloud":
+				return wetWeather;
+			case "Snow":
+				return wetWeather;
+			case "Thunder":
+				return wetWeather;
+			case "Hail":
+				return wetWeather;
+			case "Fog":
+				return wetWeather;
+			default:
+				return dryWeather;
 		}
 	}
 
-	public void setEventsPerRow(int num){
-		this.eventsPerRow=num;
+	public void setEventsPerRow(int num) {
+		this.eventsPerRow = num;
 	}
 
-	private Boolean matchRequirements(Event event){
+	private Boolean matchRequirements(Event event) {
 
-		if(culture){
-			if(event.isCulture()){
+		if (culture) {
+			if (event.isCulture()) {
 				return true;
 			}
 		}
-		if(entertainment){
-			if(event.isEntertainment()){
+		if (entertainment) {
+			if (event.isEntertainment()) {
 				return true;
 			}
 		}
-		if(relaxation){
-			if(event.isRelaxation()){
+		if (relaxation) {
+			if (event.isRelaxation()) {
 				return true;
 			}
 		}
-		if(shopping){
-			if(event.isShopping()){
+		if (shopping) {
+			if (event.isShopping()) {
 				return true;
 			}
 		}
-		if(sport){
-			if(event.isSport()){
+		if (sport) {
+			if (event.isSport()) {
 				return true;
 			}
 		}
-		if(eating){
-			if(event.isEating()){
+		if (eating) {
+			if (event.isEating()) {
 				return true;
 			}
 		}
-		if(drinking){
-			if(event.isDrinking()){
+		if (drinking) {
+			if (event.isDrinking()) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
 
-	private void createEvents(){
+	private void createEvents() {
 
 
 		Event britishMuseum = new Event("British Museum", "britishMuseum.jpg");
 		britishMuseum.culture();
 		wetWeather.add(britishMuseum);
 
-		Event westfield =  new Event("Westfield Center", "westfield.jpg");
+		Event westfield = new Event("Westfield Center", "westfield.jpg");
 		westfield.shopping();
 		wetWeather.add(westfield);
 
@@ -216,35 +224,35 @@ public class EventRecommender{
 
 
 	//Set events tags methods
-	public void setCulture(Boolean value){
+	public void setCulture(Boolean value) {
 		culture = !culture;
 	}
 
-	public void setEntertainment(Boolean value){
+	public void setEntertainment(Boolean value) {
 		entertainment = !entertainment;
 	}
 
-	public void setRelaxation(Boolean value){
+	public void setRelaxation(Boolean value) {
 		relaxation = !relaxation;
 	}
 
-	public void setShopping(Boolean value){
+	public void setShopping(Boolean value) {
 		shopping = !shopping;
 	}
 
-	public void setSport(Boolean value){
+	public void setSport(Boolean value) {
 		sport = !sport;
 	}
 
-	public void setEating(Boolean value){
+	public void setEating(Boolean value) {
 		eating = !eating;
 	}
 
-	public void setDrinking(Boolean value){
+	public void setDrinking(Boolean value) {
 		drinking = !drinking;
 	}
 
-	public void setDefaultLocation(Boolean value){
+	public void setDefaultLocation(Boolean value) {
 		defaultLocation = !defaultLocation;
 	}
 }

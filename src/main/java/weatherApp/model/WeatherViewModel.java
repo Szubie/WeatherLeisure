@@ -12,11 +12,11 @@ public class WeatherViewModel {
 	private WeekDays weekDays;
 	private ListOfCities listOfCities;
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		WeatherViewModel test = new WeatherViewModel(3);
 	}
 
-	public WeatherViewModel(int numberOfRecommendations){
+	public WeatherViewModel(int numberOfRecommendations) {
 		//Default location is London
 		weatherForecast = new WeatherForecast("London, UK");
 		eventRecommender = new EventRecommender(weatherForecast, numberOfRecommendations);
@@ -24,19 +24,19 @@ public class WeatherViewModel {
 		listOfCities = new ListOfCities();
 	}
 
-	public WeatherForecast getWeatherForecast(){
+	public WeatherForecast getWeatherForecast() {
 		return weatherForecast;
 	}
 
-	public EventRecommender getEventRecommender(){
+	public EventRecommender getEventRecommender() {
 		return eventRecommender;
 	}
 
-	public WeekDays getWeekDays(){
+	public WeekDays getWeekDays() {
 		return weekDays;
 	}
 
-	public ListOfCities getListOfCities(){
+	public ListOfCities getListOfCities() {
 		return listOfCities;
 	}
 

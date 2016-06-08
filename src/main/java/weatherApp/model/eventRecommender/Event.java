@@ -1,6 +1,6 @@
 package weatherApp.model.eventRecommender;
 
-public class Event{
+public class Event {
 
 	Boolean culture;
 	Boolean entertainment;
@@ -13,7 +13,7 @@ public class Event{
 	String name;
 	String picPath;
 
-	public Event(String name, String path){
+	public Event(String name, String path) {
 		this.name = name;
 		this.picPath = path;
 		culture = false;
@@ -26,71 +26,70 @@ public class Event{
 
 	}
 
-	public String getName(){
+	public String getName() {
 		return this.name;
 	}
 
-	public String getPicPath(){
+	public String getPicPath() {
 		return this.picPath;
 	}
 
-	public void culture(){
+	public void culture() {
 		this.culture = true;
 	}
 
-	public void entertainment(){
+	public void entertainment() {
 		this.entertainment = true;
 	}
 
-	public void relaxation(){
+	public void relaxation() {
 		this.relaxation = true;
 	}
 
-	public void shopping(){
+	public void shopping() {
 		this.shopping = true;
 	}
 
-	public void sport(){
+	public void sport() {
 		this.sport = true;
 	}
 
 
-	public void eating(){
+	public void eating() {
 		this.eating = true;
 	}
 
-	public void drinking(){
+	public void drinking() {
 		this.drinking = true;
 	}
 
 
-
-	public Boolean isCulture(){
+	public Boolean isCulture() {
 		return culture;
 	}
 
-	public Boolean isEntertainment(){
+	public Boolean isEntertainment() {
 		return entertainment;
 	}
 
 
-	public Boolean isRelaxation(){
+	public Boolean isRelaxation() {
 		return relaxation;
 	}
 
-	public Boolean isShopping(){
+	public Boolean isShopping() {
 		return shopping;
 	}
 
-	public Boolean isSport(){
+	public Boolean isSport() {
 		return sport;
 	}
 
-	public Boolean isEating(){
+	public Boolean isEating() {
 		return eating;
 	}
 
-	public Boolean isDrinking(){
+	public Boolean isDrinking() {
 		return drinking;
 	}
 
