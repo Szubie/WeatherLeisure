@@ -44,10 +44,5 @@ public class ListOfCities{
 		for(String string : test.cityList){
 			System.out.println(string);
 		}
-
-		//System.out.println("Testing equality:");
-		//System.out.println("Zymohiria".equals(test.cityList.get(test.cityList.size()-1)));
-		//System.out.println(cityList.contains("Zymohiria"));
-
 	}
 }

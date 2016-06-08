@@ -31,13 +31,17 @@ public class WeatherForecast{
 
 	public WeatherForecast(String location){
 		this.location = location;
-		getAPIdata(location);
+		try{
+			getAPIdata(location);
+		}
+		catch(ArrayIndexOutOfBoundsException e){
+			getAPIdata(location);
+		}
 		generateWeatherInTheDays();
 	}
 
-	public void getAPIdata(String location){
+	public void getAPIdata(String location) throws ArrayIndexOutOfBoundsException{
 		try{
-			//WeatherAPI weather = new WeatherAPI("44418");
 			weatherAPI = new WeatherAPI(location);
 		}
 		catch(NullPointerException e){
@@ -72,7 +76,12 @@ public class WeatherForecast{
 			System.out.println("Yahoo weatherAPI has changed. Data is unavailable until program updated.");
 			System.exit(1);
 		}
-		getAPIdata(location);
+		try{
+			getAPIdata(location);
+		}
+		catch(ArrayIndexOutOfBoundsException e){
+			getAPIdata(location);
+		}
 	}
 
 	public String getCurrentHighTemperature(){

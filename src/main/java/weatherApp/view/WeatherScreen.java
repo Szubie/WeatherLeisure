@@ -5,10 +5,7 @@ import weatherApp.model.WeatherViewModel;
 import javax.swing.*;
 import javax.swing.event.PopupMenuListener;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
+
 
 /**
  * Created by Benjy on 07/06/2016.
@@ -16,20 +13,14 @@ import java.awt.event.MouseListener;
 public class WeatherScreen extends AppScreen {
 
 	WeatherViewModel model;
-
 	JPanel weatherDisplay;
 	JPanel weekWeather;
-
 	JLabel location;
-
 	JPanel locationPanel;
-
 
 	//public JTextField locationEntry;
 	public JComboBox<String> locationEntry;
-
 	String weatherPic;
-
 	JPanel highLowMain;
 	JPanel weatherDescription;
 
@@ -59,42 +50,16 @@ public class WeatherScreen extends AppScreen {
 		return locationPanel;
 	}
 
-	/*public JTextField locationEntry() {
-		//Here we create a text field to take in the location for the forecast
-		locationEntry = new JTextField("search bar", 21);
-		locationEntry.setFont(new Font("Century Gothic", Font.ITALIC, 12));
-		locationEntry.setBackground(darkBlue);
-		locationEntry.setForeground(Color.WHITE);
-		return locationEntry;
-	}*/
-
 	public JComboBox<String> locationEntry(){
 		locationEntry = new JComboBox<String>(model.getListOfCities().getArrayOfCities());
-		//String[] cityList = model.getListOfCities().getArrayOfCities();
-		//AutoCompleteSupport.install(locationEntry, GlazedLists.eventListOf(cityList));
 		locationEntry.setSelectedItem("Search bar");
 		locationEntry.putClientProperty("JComboBox.isTableCellEditor", true);
-		//locationEntry.setEditable(true);
-		//locationEntry.setFont(new Font("Century Gothic", Font.ITALIC, 12));
-		//locationEntry.setBackground(darkBlue);
-		//locationEntry.setForeground(Color.WHITE);
 		return locationEntry;
 	}
 
 	public void addSearchBarListener(PopupMenuListener listener) {
 		locationEntry.addPopupMenuListener(listener);
 	}
-	/*public void addSearchBarMouseListener(MouseListener listener){
-		for(Component component : locationEntry.getComponents()){
-			component.addMouseListener(listener);
-		}
-	}
-
-	public void addSearchBarKeyListener(KeyListener listener){
-		for(Component component : locationEntry.getComponents()){
-			component.addKeyListener(listener);
-		}
-	}*/
 
 	public JPanel weatherDisplay() {
 		//Create an ImageIcon to display the current weather

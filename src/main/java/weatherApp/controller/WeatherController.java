@@ -7,7 +7,6 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
-import java.awt.Color;
 import java.util.ArrayList;
 
 
@@ -17,7 +16,6 @@ public class WeatherController{
 	private WeatherViewModel model;
 
 	public WeatherController(WeatherView view, WeatherViewModel model){
-		//this.weatherApp.view=weatherApp.view;
 		this.model=model;
 		addActionListeners(view);
 		viewList.add(view);
@@ -45,9 +43,6 @@ public class WeatherController{
 				String weekDay = but.getText();
 				//make a call to the Weather Model to set the week day accordingly
 				model.getWeekDays().setWeekDay(weekDay);
-				//but.setBackground(view.darkGrey);
-				//but.setForeground(Color.WHITE);
-				//but.setOpaque(true);
 				view.proposalGrid.updateProposalGrid();
 			}
 		});
