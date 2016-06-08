@@ -34,13 +34,13 @@ public class WeatherForecast{
 		try{
 			getAPIdata(location);
 		}
-		catch(ArrayIndexOutOfBoundsException e){
+		catch(IndexOutOfBoundsException e){
 			getAPIdata(location);
 		}
 		generateWeatherInTheDays();
 	}
 
-	public void getAPIdata(String location) throws ArrayIndexOutOfBoundsException{
+	public void getAPIdata(String location) throws IndexOutOfBoundsException{
 		try{
 			weatherAPI = new WeatherAPI(location);
 		}
@@ -79,7 +79,7 @@ public class WeatherForecast{
 		try{
 			getAPIdata(location);
 		}
-		catch(ArrayIndexOutOfBoundsException e){
+		catch(IndexOutOfBoundsException e){
 			getAPIdata(location);
 		}
 	}
