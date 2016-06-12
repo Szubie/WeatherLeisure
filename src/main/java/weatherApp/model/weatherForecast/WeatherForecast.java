@@ -21,67 +21,56 @@ public class WeatherForecast{
 	//Temporarily randomly generated dummy data
 	private ArrayList<String []> weatherForDay = new ArrayList<String[]>();
 
+	private boolean validLocation;
 
-	public static void main(String[] args){
-		WeatherForecast test = new WeatherForecast("London, UK");
-		System.out.println(test.location);
-		System.out.println(test.dayTemperatures[0]);
-		System.out.println(test.currentWeatherDescription);
-	}
 
 	public WeatherForecast(String location){
 		this.location = location;
+		weatherAPI = new WeatherAPI();
 		try{
-			getAPIdata(location);
+			getAPIdata(location, weatherAPI);
 		}
 		catch(IndexOutOfBoundsException e){
-			getAPIdata(location);
+			System.out.println("API list out of bounds exception");
+			getAPIdata(location, weatherAPI);
 		}
 		generateWeatherInTheDays();
 	}
 
-	public void getAPIdata(String location) throws IndexOutOfBoundsException{
+	public void getAPIdata(String location, WeatherAPI weatherAPI) throws IndexOutOfBoundsException{
 		try{
-			weatherAPI = new WeatherAPI(location);
+			weatherAPI.processWeatherRequest(location);
 		}
 		catch(NullPointerException e){
 			System.out.println("Yahoo weatherAPI has changed. Data is unavailable until program updated.");
 			System.exit(1);
-		}
-		currentHighTemp=weatherAPI.weatherForecastList.get(0).highTemp;
-		currentLowTemp=weatherAPI.weatherForecastList.get(0).lowTemp;
-		currentWeatherDescription=weatherAPI.weatherForecastList.get(0).text;
-		currentAverageTemp = weatherAPI.weatherForecastList.get(weatherAPI.weatherForecastList.size()-1).currentTemp;
-		dayTemperatures[0] = currentAverageTemp;
-
-		for(int i=0; i<weatherCodes.length; i++){
-			weatherCodes[i] = weatherAPI.weatherForecastList.get(i).code;
-
-		}
-
-		for(int j=1; j<dayTemperatures.length; j++){
-			dayTemperatures[j] = WeatherAPI.weatherForecastList.get(j).highTemp;
-		}
-
-		generateWeatherDescriptions();
-	
-	}
-
-	private void updateAPIdata(String location){
-		weatherAPI.weatherForecastList.clear();
-		try{
-			weatherAPI = new WeatherAPI(location);
-		}
-		catch(NullPointerException e){
-			System.out.println("Yahoo weatherAPI has changed. Data is unavailable until program updated.");
-			System.exit(1);
-		}
-		try{
-			getAPIdata(location);
 		}
 		catch(IndexOutOfBoundsException e){
-			getAPIdata(location);
+			getAPIdata(location, weatherAPI);
 		}
+		if(weatherAPI.foundRequestedCity()) {
+			validLocation = true;
+			currentHighTemp = weatherAPI.weatherForecastList.get(0).highTemp;
+			currentLowTemp = weatherAPI.weatherForecastList.get(0).lowTemp;
+			currentWeatherDescription = weatherAPI.weatherForecastList.get(0).text;
+			currentAverageTemp = weatherAPI.weatherForecastList.get(weatherAPI.weatherForecastList.size() - 1).currentTemp;
+			dayTemperatures[0] = currentAverageTemp;
+
+			for (int i = 0; i < weatherCodes.length; i++) {
+				weatherCodes[i] = weatherAPI.weatherForecastList.get(i).code;
+
+			}
+
+			for (int j = 1; j < dayTemperatures.length; j++) {
+				dayTemperatures[j] = weatherAPI.weatherForecastList.get(j).highTemp;
+			}
+
+			generateWeatherDescriptions();
+		}
+		else{
+			validLocation = false;
+		}
+	
 	}
 
 	public String getCurrentHighTemperature(){
@@ -128,8 +117,6 @@ public class WeatherForecast{
 		return result;
 	}
 
-	//Below are the stterer accessed via the setting page
-	// Setting the main preferences to base the day planning suggestions on
 	public String getWeather(int day){
 		return weatherDescriptions.get(day);
 	}
@@ -180,6 +167,18 @@ public class WeatherForecast{
 
 	public void setLocation(String location){
 		this.location = location;
-		updateAPIdata(location);
+		getAPIdata(location, weatherAPI);
+	}
+
+	public boolean isValidLocation(){
+		return validLocation;
+	}
+
+
+	public static void main(String[] args){
+		WeatherForecast test = new WeatherForecast("London, UK");
+		System.out.println(test.location);
+		System.out.println(test.dayTemperatures[0]);
+		System.out.println(test.currentWeatherDescription);
 	}
 }

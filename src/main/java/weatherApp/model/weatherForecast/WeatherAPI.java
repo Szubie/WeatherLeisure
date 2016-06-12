@@ -7,9 +7,10 @@ import java.io.*;
 
 public class WeatherAPI
 {
-	static String theWeatherRSS;
-	static String theCity;
-	static ArrayList<Forecast> weatherForecastList;
+	String theWeatherRSS;
+	String theCity;
+	ArrayList<Forecast> weatherForecastList;
+	boolean validLocation;
 	
 	public class Forecast
 	{
@@ -22,6 +23,16 @@ public class WeatherAPI
 
 	public WeatherAPI(String city)
 	{
+		weatherForecastList = new ArrayList<Forecast>();
+		processWeatherRequest(city);
+	}
+
+	public WeatherAPI(){
+		weatherForecastList = new ArrayList<Forecast>();
+	}
+
+	public void processWeatherRequest(String city){
+		weatherForecastList.clear();
 		String parsedLocation = "";
 		String[] processLocation = city.split(" ");
 		if(processLocation.length==0){
@@ -34,13 +45,20 @@ public class WeatherAPI
 		}
 		parsedLocation = parsedLocation.substring(0,parsedLocation.length()-1);
 		theWeatherRSS = getWeatherAsRSS(parsedLocation);
-		parseWeather(theWeatherRSS);
+		parseWeather(theWeatherRSS, city);
+		isValidLocation(city, theWeatherRSS);
 	}
 
-	void parseWeather(String weatherHTML)
+	void parseWeather(String weatherHTML, String city)
 	{
-		weatherForecastList = new ArrayList<Forecast>();
 		int startIndex = 0;
+
+		if (isValidLocation(city, weatherHTML)){
+			validLocation = true;
+		}
+		else{
+			validLocation = false;
+		}
 
 
 		while(true)
@@ -122,5 +140,37 @@ public class WeatherAPI
 		}
 		catch(Exception e) {System.err.println("Weather API Exception: "+e);}
 		return null;
+	}
+
+	private boolean isValidLocation(String cityName, String theWeatherRSS){
+		int startIndex = 0;
+		startIndex = theWeatherRSS.indexOf("<title>Yahoo! Weather - ", startIndex);
+		startIndex = theWeatherRSS.indexOf(">", startIndex)+1;
+		int endIndex = theWeatherRSS.indexOf("</title>", startIndex);
+		String location = theWeatherRSS.substring(startIndex, endIndex);
+		location = location.substring(17,location.length());
+		String[] splitLocation = location.split(", ");
+		if(cityName.split(", ").length>1){
+			cityName = cityName.split(", ")[0];
+		}
+		if(splitLocation[0].equals(cityName)){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+	public boolean foundRequestedCity(){
+		return validLocation;
+	}
+
+	public static void main(String[] args){
+		WeatherAPI weatherAPI = new WeatherAPI();
+		weatherAPI.processWeatherRequest("London, UK");
+		for(Forecast forecast : weatherAPI.weatherForecastList){
+			System.out.println(forecast.code);
+		}
+
 	}
 }

@@ -64,32 +64,39 @@ public class WeatherController{
 
 					@Override
 					public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-					JComboBox<String> source = (JComboBox) e.getSource();
+						JComboBox<String> source = (JComboBox<String>) e.getSource();
 						String text = (String) source.getSelectedItem();
 						String cityName = (String) source.getSelectedItem();
-						System.out.println("text: " + text);
-						System.out.println("cityName " + cityName);
 						if (text.contains(",")) {
 							String[] splitText = text.split(",");
 							cityName = splitText[0];
 						}
-						if (model.getListOfCities().contains(cityName)) {
+						/*if (model.getListOfCities().contains(cityName)) {
 							model.getWeatherForecast().setLocation(text);
 							view.weatherScreen.updateLocation();
 						} else {
 							JOptionPane.showMessageDialog(view.frame, "Sorry, that location either does not exist or is not supported at this time.");
+						}*/
+						model.getWeatherForecast().setLocation(text);
+						if(model.getWeatherForecast().isValidLocation()){
+							view.weatherScreen.updateLocation();
+						}
+						else{
+							JOptionPane.showMessageDialog(view.frame, "Sorry, couldn't find that location!");
 						}
 					}
 				});
-    }
+	}
 
     public void addWeatherButtonListener(final WeatherView view){
     	view.addWeatherButtonListener(
     		new ActionListener(){
 	            public void actionPerformed(ActionEvent e){
-		            view.hideSettings();
-		            view.hideProposal();
-		            view.showWeatherMain();
+					for(WeatherView view : viewList) {
+						view.hideSettings();
+						view.hideProposal();
+						view.showWeatherMain();
+					}
 	        	}
 	        });
 	}
@@ -98,12 +105,14 @@ public class WeatherController{
     	view.addProposalButtonListener(
     		new ActionListener(){
 	            public void actionPerformed(ActionEvent e){
-		            view.proposalGrid.updateProposalGrid();
-		            view.hideSettings();
-		            view.hideWeatherMain();
-					JRootPane rootPane = view.frame.getRootPane();
-					rootPane.setDefaultButton(view.proposalGrid.today);
-		            view.showProposal();
+					for(WeatherView view : viewList) {
+						view.proposalGrid.updateProposalGrid();
+						view.hideSettings();
+						view.hideWeatherMain();
+						JRootPane rootPane = view.frame.getRootPane();
+						rootPane.setDefaultButton(view.proposalGrid.today);
+						view.showProposal();
+					}
 	        	}
 	        });
 	}
@@ -112,9 +121,11 @@ public class WeatherController{
 		view.addSettingsButtonListener(
 			new ActionListener(){
 		        public void actionPerformed(ActionEvent e){
-		            view.hideWeatherMain();
-		            view.hideProposal();
-		            view.showSettings();
+					for(WeatherView view : viewList) {
+						view.hideWeatherMain();
+						view.hideProposal();
+						view.showSettings();
+					}
 		        }
 	        });
 	}
