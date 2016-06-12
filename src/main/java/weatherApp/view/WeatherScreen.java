@@ -5,6 +5,11 @@ import weatherApp.model.WeatherViewModel;
 import javax.swing.*;
 import javax.swing.event.PopupMenuListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 
 /**
@@ -27,11 +32,72 @@ public class WeatherScreen extends AppScreen {
 
 	ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
+	private Image backgroundImage;
+	private ImageIcon imageIcon;
+
+	@Override
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		g.drawImage(backgroundImage,0,0,getWidth(),getHeight(),this);
+	}
+
+
+
 
 	public WeatherScreen(WeatherViewModel model) {
 		this.model = model;
-		this.setBackground(Color.WHITE);
+		/*URL url = null;
+		try{
+			url = classLoader.getResource("weatherImages/rainBackground.gif");
+		}
+		catch(Exception e){}
+		Image image = new ImageIcon(url).getImage();
+		this.backgroundImage = image;*/
+
+		/*URL url = null;
+		try{
+			url = new URL("http://i.4cdn.org/wsg/1464081561854.gif");
+		}
+		catch(Exception e){}
+		Image image = new ImageIcon(url).getImage();
+		this.backgroundImage = image;*/
+
+		/*ImageIcon imageIcon = new ImageIcon(WeatherScreen.this.getClass().getResource("/weatherImages/rainBackground.gif"));
+		Image image = imageIcon.getImage();
+		this.backgroundImage = image;*/
+
+		URL url = null;
+		try{
+			url = classLoader.getResource("weatherImages/rainBackground.gif");
+		}
+		catch(Exception e){}
+		Image image = new ImageIcon(url).getImage();
+		this.backgroundImage = image;
+
+		/*InputStream in = classLoader.getResourceAsStream("weatherImages/rainBackground.gif");
+		Image image = null;
+		try {
+			image = Toolkit.getDefaultToolkit().createImage(org.apache.commons.io.IOUtils.toByteArray(in));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		this.backgroundImage = image;*/
+
+		/*URL url = null;
+		try{
+			url = classLoader.getResource("weatherImages/rain.gif");
+		}
+		catch(Exception e){}
+		ImageIcon imageIcon = new ImageIcon(url);
+		JLabel iconLabel = new JLabel();
+		iconLabel.setIcon(imageIcon);
+		imageIcon.setImageObserver(iconLabel);
+		//this.add(iconLabel); //
+		*/
+
+		//this.setBackground(Color.WHITE);
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
 		this.add(locationEntry());
 		this.add(locationPanel());
 		this.add(weatherDisplay());
@@ -46,7 +112,8 @@ public class WeatherScreen extends AppScreen {
 		location = new JLabel(model.getWeatherForecast().getLocation() + ", " + model.getWeatherForecast().getCurrentAverageTemp());
 		location.setFont(new Font("Century Gothic", Font.BOLD, cityFont));
 		locationPanel.add(location, BorderLayout.NORTH);
-		locationPanel.setBackground(Color.WHITE);
+		//locationPanel.setBackground(Color.WHITE);
+		locationPanel.setOpaque(false);
 		return locationPanel;
 	}
 
@@ -70,7 +137,8 @@ public class WeatherScreen extends AppScreen {
 		JLabel imageLabel = new JLabel(image);
 		imageLabel.setVisible(true);
 		weatherDisplay = new JPanel();
-		weatherDisplay.setBackground(Color.WHITE);
+		//weatherDisplay.setBackground(Color.WHITE);
+		weatherDisplay.setOpaque(false);
 		weatherDisplay.add(imageLabel, BorderLayout.CENTER);
 		weatherDisplay.setPreferredSize(new Dimension(WIDTH, 360));
 		return weatherDisplay;
@@ -78,7 +146,7 @@ public class WeatherScreen extends AppScreen {
 
 	public JPanel highLowMain() {
 		highLowMain = new JPanel(new FlowLayout());
-		highLowMain.setBackground(darkBlue);
+		//highLowMain.setBackground(darkBlue);
 		String high = "High: ";
 		String low = "Low: ";
 		String highTemp = model.getWeatherForecast().getCurrentHighTemperature();
@@ -89,19 +157,21 @@ public class WeatherScreen extends AppScreen {
 		highLow.setFont(new Font("Century Gothic", Font.BOLD, highLowFont));
 		highLow.setForeground(Color.WHITE);
 		highLowMain.add(highLow);
+		highLowMain.setOpaque(false);
 		return highLowMain;
 	}
 
 
 	public JPanel weatherDescription() {
 		weatherDescription = new JPanel(new FlowLayout());
-		weatherDescription.setBackground(darkBlue);
+		//weatherDescription.setBackground(darkBlue);
 		String value = model.getWeatherForecast().getCurrentWeatherDescription();
 		//Here we would query weatherApp.model to retrieve the temperatures
 		JLabel descriptionText = new JLabel(value);
 		descriptionText.setFont(new Font("Century Gothic", Font.BOLD, weatherDescFont));
 		descriptionText.setForeground(Color.WHITE);
 		weatherDescription.add(descriptionText);
+		weatherDescription.setOpaque(false);
 
 		return weatherDescription;
 
@@ -110,7 +180,7 @@ public class WeatherScreen extends AppScreen {
 	public JPanel weekWeather() {
 		//create a panel to display weather for the week ahead
 		weekWeather = new JPanel();
-		weekWeather.setBackground(Color.WHITE);
+		//weekWeather.setBackground(Color.WHITE);
 		weekWeather.setPreferredSize(new Dimension(WIDTH, 100));
 		weekWeather.setLayout(new FlowLayout());
 		String upcomingWeather[] = new String[3];
@@ -141,6 +211,8 @@ public class WeatherScreen extends AppScreen {
 		weekWeather.add(tomorrow2);
 		weekWeather.add(tomorrow3);
 		weekWeather.add(tomorrow4);
+
+		weekWeather.setOpaque(false);
 
 		return weekWeather;
 	}

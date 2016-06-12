@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.Color;
 import java.awt.event.*;
+import java.net.URL;
 
 
 public class WeatherView extends AppScreen {
@@ -62,7 +63,7 @@ public class WeatherView extends AppScreen {
 			this.model = model;
 		}
 
-		frame.setBackground(Color.WHITE);
+		//frame.setBackground(Color.WHITE);
 		frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 
 		//Proceed with building the UI layout
@@ -91,9 +92,9 @@ public class WeatherView extends AppScreen {
 		//create the top panel telling us what screen we are in
 		topBar = new JPanel();
 		topBar.setPreferredSize(new Dimension(WIDTH, 80));
-		topBar.setBackground(darkBlue);
+		//topBar.setBackground(darkBlue);
 		topBarLabel = new JLabel("WEATHER", JLabel.CENTER);
-		topBarLabel.setForeground(Color.WHITE);
+		//topBarLabel.setForeground(Color.WHITE);
 		topBarLabel.setFont(new Font("Century Gothic", Font.BOLD, screenLabelfont));
 		topBar.add(topBarLabel);
 		return topBar;
@@ -109,7 +110,7 @@ public class WeatherView extends AppScreen {
 		bottomPanel = new JPanel();
 		bottomPanel.setPreferredSize(new Dimension(WIDTH, 60));
 
-		bottomPanel.setBackground(darkBlue);
+		//bottomPanel.setBackground(darkBlue);
 
 		JButton weatherButton = new JButton("Weather");
 		JButton proposalButton = new JButton("Proposal");

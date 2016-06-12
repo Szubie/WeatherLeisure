@@ -25,6 +25,7 @@
                             <addClasspath>true</addClasspath>
                             <mainClass>weatherApp.WeatherApplication</mainClass>
                         </manifest>
+                        <compress>false</compress>
                     </archive>
                 </configuration>
             </plugin>
