@@ -55,9 +55,9 @@ public class WeekDays{
 		return daysOfWeek[0];
 	}
 
-	public String getFirstDay(){
-		return daysOfWeek[1];
-	}
+	//public String getFirstDay(){
+	//	return daysOfWeek[1];
+	//}
 	
 	public String getSecondDay(){
 		return daysOfWeek[2];
@@ -69,6 +69,10 @@ public class WeekDays{
 	
 	public String getFourthDay(){
 		return daysOfWeek[4];
+	}
+
+	public String getDay(int dayNo){
+		return daysOfWeek[dayNo];
 	}
 
 }

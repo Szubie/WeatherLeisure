@@ -109,8 +109,6 @@ public class WeatherController{
 						view.proposalGrid.updateProposalGrid();
 						view.hideSettings();
 						view.hideWeatherMain();
-						JRootPane rootPane = view.frame.getRootPane();
-						rootPane.setDefaultButton(view.proposalGrid.today);
 						view.showProposal();
 					}
 	        	}

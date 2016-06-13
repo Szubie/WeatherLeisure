@@ -19,11 +19,7 @@ public class ProposalGrid extends AppScreen {
 	JPanel timePanel = new JPanel();
 	JPanel eventGrid = new JPanel(new GridLayout(3, 3, 7, 7));
 
-	public JButton today;
-	JButton firstDay;
-	JButton secondDay;
-	JButton thirdDay;
-	JButton fourthDay;
+	JButton[] buttonList = new JButton[5];
 
 	ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
@@ -36,25 +32,12 @@ public class ProposalGrid extends AppScreen {
 		daysPanel = new JPanel(new FlowLayout());
 		daysPanel.setBackground(Color.WHITE);
 
-		//Today selected by default through controller
-		today = new JButton(model.getWeekDays().getWeekDay());
-		today = formatButton(today);
-		firstDay = new JButton(model.getWeekDays().getFirstDay());
-		firstDay = formatButton(firstDay);
-		secondDay = new JButton(model.getWeekDays().getSecondDay());
-		secondDay = formatButton(secondDay);
-		thirdDay = new JButton(model.getWeekDays().getThirdDay());
-		thirdDay = formatButton(thirdDay);
-		fourthDay = new JButton(model.getWeekDays().getFourthDay());
-		fourthDay = formatButton(fourthDay);
-
-
-		//Populate the days panel
-		daysPanel.add(today);
-		daysPanel.add(firstDay);
-		daysPanel.add(secondDay);
-		daysPanel.add(thirdDay);
-		daysPanel.add(fourthDay);
+		for(int i=0; i<buttonList.length; i++){
+			JButton dayButton = new JButton(model.getWeekDays().getDay(i));
+			dayButton = formatButton(dayButton);
+			buttonList[i] = dayButton;
+			daysPanel.add(dayButton);
+		}
 
 		timePanel.setLayout(new BoxLayout(timePanel, BoxLayout.Y_AXIS));
 		timePanel.setAlignmentX(Component.LEFT_ALIGNMENT);

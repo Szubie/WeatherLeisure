@@ -178,7 +178,7 @@ public class WeatherView extends AppScreen {
 	public void showProposal() {
 		//Set the current day button to be selected by default
 		JRootPane rootPane = frame.getRootPane();
-		rootPane.setDefaultButton(proposalGrid.today);
+		rootPane.setDefaultButton(proposalGrid.buttonList[0]);
 
 		weatherScreen.locationPanel.setVisible(true);
 		proposalGrid.setVisible(true);
