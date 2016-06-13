@@ -22,6 +22,7 @@ public class WeatherForecast{
 	private ArrayList<String []> weatherForDay = new ArrayList<String[]>();
 
 	private boolean validLocation;
+	private boolean previousAttemptToAccessAPI = false;
 
 
 	public WeatherForecast(String location){
@@ -42,8 +43,14 @@ public class WeatherForecast{
 			weatherAPI.processWeatherRequest(location);
 		}
 		catch(NullPointerException e){
-			System.out.println("Yahoo weatherAPI has changed. Data is unavailable until program updated.");
-			System.exit(1);
+			if(!previousAttemptToAccessAPI){
+				System.out.println("Retrying Yahoo Weather API...");
+				getAPIdata(location, weatherAPI);
+			}
+			else{
+				System.out.println("Yahoo weatherAPI may have changed. Could not access data.");
+				System.exit(1);
+			}
 		}
 		catch(IndexOutOfBoundsException e){
 			getAPIdata(location, weatherAPI);
