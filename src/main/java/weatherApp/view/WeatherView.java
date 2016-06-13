@@ -77,14 +77,16 @@ public class WeatherView extends AppScreen {
 	public void startWeatherScreen(JFrame frame) {
 		//Add the components to our frame
 		frame.add(topBar());
-		settingsScreen = new SettingsScreen();
-		frame.add(settingsScreen);
 		weatherScreen = new WeatherScreen(model);
 		frame.add(weatherScreen);
 		proposalGrid = new ProposalGrid(model);
 		frame.add(proposalGrid);
+		settingsScreen = new SettingsScreen();
+		frame.add(settingsScreen);
 		frame.add(bottomPanel());
-
+		hideProposal();
+		hideSettings();
+		showWeatherMain();
 	}
 
 
@@ -92,9 +94,9 @@ public class WeatherView extends AppScreen {
 		//create the top panel telling us what screen we are in
 		topBar = new JPanel();
 		topBar.setPreferredSize(new Dimension(WIDTH, 80));
-		//topBar.setBackground(darkBlue);
+		topBar.setBackground(darkBlue);
 		topBarLabel = new JLabel("WEATHER", JLabel.CENTER);
-		//topBarLabel.setForeground(Color.WHITE);
+		topBarLabel.setForeground(Color.WHITE);
 		topBarLabel.setFont(new Font("Century Gothic", Font.BOLD, screenLabelfont));
 		topBar.add(topBarLabel);
 		return topBar;
@@ -110,7 +112,7 @@ public class WeatherView extends AppScreen {
 		bottomPanel = new JPanel();
 		bottomPanel.setPreferredSize(new Dimension(WIDTH, 60));
 
-		//bottomPanel.setBackground(darkBlue);
+		bottomPanel.setBackground(darkBlue);
 
 		JButton weatherButton = new JButton("Weather");
 		JButton proposalButton = new JButton("Proposal");

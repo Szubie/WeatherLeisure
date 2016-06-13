@@ -36,8 +36,6 @@ public class WeatherScreen extends AppScreen {
 	}
 
 
-
-
 	public WeatherScreen(WeatherViewModel model) {
 		this.model = model;
 		String currentWeather = model.getWeatherForecast().getTodayWeather().toLowerCase();

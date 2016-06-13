@@ -33,7 +33,7 @@ public abstract class AppScreen extends JPanel {
 
 	//Color niceBlue = new Color(102, 153, 255);
 	//public Color darkGrey = new Color(102, 102, 153);
-	//Color darkBlue = new Color(60, 110, 190);
+	Color darkBlue = new Color(60, 110, 190);
 
 	//Create an ImageIcon to display the current weather
 	String imagesFolder = "images/";

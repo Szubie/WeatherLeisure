@@ -27,7 +27,6 @@ public class ProposalGrid extends AppScreen {
 		this.model = model;
 		this.setPreferredSize(new Dimension(WIDTH, 360));
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		this.setBackground(Color.WHITE);
 
 		daysPanel = new JPanel(new FlowLayout());
 		daysPanel.setBackground(Color.WHITE);
@@ -81,7 +80,6 @@ public class ProposalGrid extends AppScreen {
 		midPanel.add(eventGrid);
 
 		this.add(daysPanel);
-		daysPanel.setBackground(Color.WHITE);
 		this.add(midPanel);
 		midPanel.setBackground(Color.WHITE);
 		this.setVisible(false);
@@ -141,7 +139,6 @@ public class ProposalGrid extends AppScreen {
 		timePanel.add(afternoon);
 		timePanel.add(Box.createRigidArea(new Dimension(0, 40)));
 		timePanel.add(evening);
-		timePanel.setBackground(Color.WHITE);
 
 
 		eventGrid.removeAll();
