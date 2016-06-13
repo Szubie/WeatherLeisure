@@ -5,7 +5,9 @@ import weatherApp.model.WeatherViewModel;
 import javax.swing.*;
 import javax.swing.event.PopupMenuListener;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.net.URL;
+import java.util.Random;
 
 
 /**
@@ -18,12 +20,16 @@ public class WeatherScreen extends AppScreen {
 	JPanel weekWeather;
 	JLabel location;
 	JPanel locationPanel;
+	JPanel locationEntryPanel;
 
-	//public JTextField locationEntry;
-	public JComboBox<String> locationEntry;
+	Component filler;
+	public JTextField locationEntry;
+	//public JComboBox<String> locationEntry;
 	JPanel highLowMain;
 	JPanel weatherDescription;
+	JPanel currentTemperature;
 
+	Random rand = new Random();
 
 	ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
@@ -39,24 +45,30 @@ public class WeatherScreen extends AppScreen {
 	public WeatherScreen(WeatherViewModel model) {
 		this.model = model;
 		String currentWeather = model.getWeatherForecast().getTodayWeather().toLowerCase();
-		String filePath = "weatherImages/"+currentWeather+"Background.gif";
+		int picNo = rand.nextInt(2);
+		String filePath = "weatherImages/"+currentWeather+"background"+picNo+".gif";
 
 		URL url = null;
-		try{
+		try {
 			url = classLoader.getResource(filePath);
+			Image image = new ImageIcon(url).getImage();
+			this.backgroundImage = image;
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
-		Image image = new ImageIcon(url).getImage();
-		this.backgroundImage = image;
 
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-		this.add(locationEntry());
+		filler =  Box.createRigidArea(new Dimension(0,HEIGHT/90));
+		this.add(filler);
 		this.add(locationPanel());
+		this.add(locationEntry());
+		filler = Box.createRigidArea(new Dimension(0,HEIGHT/25));
+		this.add(filler);
 		this.add(weatherDisplay());
 		this.add(weatherDescription());
+		this.add(currentTemperature());
 		this.add(highLowMain());
 		this.add(weekWeather());
 	}
@@ -64,23 +76,56 @@ public class WeatherScreen extends AppScreen {
 	public JPanel locationPanel() {
 		//Add the text label telling us what location the weather is given for
 		locationPanel = new JPanel();
-		location = new JLabel(model.getWeatherForecast().getLocation() + ", " + model.getWeatherForecast().getCurrentAverageTemp());
+		location = new JLabel(model.getWeatherForecast().getLocation());
 		location.setFont(new Font("Century Gothic", Font.BOLD, cityFont));
 		location.setForeground(Color.WHITE);
-		locationPanel.add(location, BorderLayout.NORTH);
+		locationPanel.add(location);
 		locationPanel.setOpaque(false);
+		locationPanel.setBackground(new Color(150,150,150,150));
 		return locationPanel;
 	}
 
-	public JComboBox<String> locationEntry(){
+	/*public JComboBox<String> locationEntry(){
 		locationEntry = new JComboBox<String>(model.getListOfCities().getArrayOfCities());
 		locationEntry.setSelectedItem("Search bar");
 		locationEntry.putClientProperty("JComboBox.isTableCellEditor", true);
 		return locationEntry;
+	}*/
+
+	public JPanel locationEntry(){
+		locationEntryPanel = new JPanel();
+
+		locationEntryPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		//Component filler = Box.createRigidArea(new Dimension(WIDTH/5, 0));
+		//locationPanel.add(filler);
+		locationEntry = new JTextField("search bar");
+		locationEntry.setFont(new Font("Century Gothic", Font.ITALIC, 8));
+		locationEntry.setForeground(Color.WHITE);
+		locationEntry.setBorder(BorderFactory.createEmptyBorder());
+		locationEntry.setOpaque(false);
+		locationEntryPanel.add(locationEntry);
+		locationEntryPanel.setBackground(new Color(150,150,150,150));
+		locationEntryPanel.setOpaque(false);
+		return locationEntryPanel;
 	}
 
-	public void addSearchBarListener(PopupMenuListener listener) {
+	public JPanel currentTemperature(){
+		currentTemperature = new JPanel();
+		JLabel temp = new JLabel(model.getWeatherForecast().getCurrentAverageTemp());
+		temp.setFont(new Font("Century Gothic", Font.BOLD, cityFont));
+		temp.setForeground(Color.WHITE);
+		currentTemperature.setBackground(new Color(150,150,150,150));
+		currentTemperature.add(temp, BorderLayout.NORTH);
+		currentTemperature.setOpaque(false);
+		return currentTemperature;
+	}
+
+	/*public void addSearchBarListener(PopupMenuListener listener) {
 		locationEntry.addPopupMenuListener(listener);
+	}*/
+
+	public void addSearchBarListener(ActionListener listener){
+		locationEntry.addActionListener(listener);
 	}
 
 	public JPanel weatherDisplay() {
@@ -95,6 +140,7 @@ public class WeatherScreen extends AppScreen {
 		weatherDisplay.setOpaque(false);
 		weatherDisplay.add(imageLabel, BorderLayout.CENTER);
 		weatherDisplay.setPreferredSize(new Dimension(WIDTH, 360));
+		weatherDisplay.setBackground(new Color(150,150,150,150));
 		return weatherDisplay;
 	}
 
@@ -111,6 +157,7 @@ public class WeatherScreen extends AppScreen {
 		highLow.setForeground(Color.WHITE);
 		highLowMain.add(highLow);
 		highLowMain.setOpaque(false);
+		highLowMain.setBackground(new Color(150,150,150,150));
 		return highLowMain;
 	}
 
@@ -124,6 +171,7 @@ public class WeatherScreen extends AppScreen {
 		descriptionText.setForeground(Color.WHITE);
 		weatherDescription.add(descriptionText);
 		weatherDescription.setOpaque(false);
+		weatherDescription.setBackground(new Color(150,150,150,150));
 
 		return weatherDescription;
 
@@ -137,9 +185,8 @@ public class WeatherScreen extends AppScreen {
 		String upcomingWeather[] = new String[3];
 		String imageExtension = ".png";
 
-		String weatherPic = model.getWeatherForecast().getWeather(1) + imageExtension;
-
 		for(int i=0; i<4; i++){
+			String weatherPic = model.getWeatherForecast().getWeather(i+1) + imageExtension;
 			JLabel dayWeatherPic = createSmallIconLabel(model.getWeekDays().getDay(i), weatherPic);
 			dayWeatherPic.setFont(new Font("Century Gothic", Font.BOLD, weekWeatherFont));
 			dayWeatherPic.setForeground(Color.WHITE);
@@ -147,11 +194,12 @@ public class WeatherScreen extends AppScreen {
 		}
 
 		weekWeather.setOpaque(false);
+		weekWeather.setBackground(new Color(150,150,150,150));
 
 		return weekWeather;
 	}
 
-	public JLabel createSmallIconLabel(String label, String picPath) {
+	private JLabel createSmallIconLabel(String label, String picPath) {
 		String iconPath = smallImagesFolder + picPath;
 		java.net.URL picURL = classLoader.getResource(iconPath);
 		ImageIcon image = new ImageIcon(picURL);
@@ -168,9 +216,27 @@ public class WeatherScreen extends AppScreen {
 
 	//Set the location to the text in the text area
 	public void updateLocation() {
+
+		locationEntry.setText("search bar");
+		String currentWeather = model.getWeatherForecast().getTodayWeather().toLowerCase();
+		int picNo = rand.nextInt(2);
+		String filePath = "weatherImages/"+currentWeather+"background"+picNo+".gif";
+
+		URL url = null;
+		try{
+			url = classLoader.getResource(filePath);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		Image backgroundImage = new ImageIcon(url).getImage();
+		this.backgroundImage = backgroundImage;
+
 		String imageExtension = ".png";
 
-		location.setText(model.getWeatherForecast().getLocation() + ", " + model.getWeatherForecast().getCurrentAverageTemp());
+		location.setText(model.getWeatherForecast().getLocation());
+		JLabel label = (JLabel) currentTemperature.getComponent(0);
+		label.setText(model.getWeatherForecast().getCurrentAverageTemp());
 
 		String high = "High: ";
 		String low = "Low: ";
@@ -192,7 +258,7 @@ public class WeatherScreen extends AppScreen {
 
 		Component[] weekWeatherComponents = weekWeather.getComponents();
 		for (int i = 0; i < weekWeatherComponents.length; i++) {
-			String weatherPic = model.getWeatherForecast().getWeather(i + 1) + imageExtension;
+			String weatherPic = model.getWeatherForecast().getWeather(i + 1).toLowerCase() + imageExtension;
 			JLabel weekLabel = (JLabel) weekWeatherComponents[i];
 			java.net.URL picURL = classLoader.getResource(smallImagesFolder + weatherPic);
 			weekLabel.setIcon(new ImageIcon(picURL));
