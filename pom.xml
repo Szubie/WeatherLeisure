@@ -3,6 +3,9 @@
     <groupId>com.mycompany.app</groupId>
     <artifactId>my-app</artifactId>
     <version>1</version>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
     <build>
         <plugins>
             <plugin>
