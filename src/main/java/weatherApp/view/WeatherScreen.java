@@ -258,7 +258,7 @@ public class WeatherScreen extends AppScreen {
 
 		Component[] weekWeatherComponents = weekWeather.getComponents();
 		for (int i = 0; i < weekWeatherComponents.length; i++) {
-			String weatherPic = model.getWeatherForecast().getWeather(i + 1).toLowerCase() + imageExtension;
+			String weatherPic = model.getWeatherForecast().getWeather(i + 1) + imageExtension;
 			JLabel weekLabel = (JLabel) weekWeatherComponents[i];
 			java.net.URL picURL = classLoader.getResource(smallImagesFolder + weatherPic);
 			weekLabel.setIcon(new ImageIcon(picURL));
