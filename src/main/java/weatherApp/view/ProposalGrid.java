@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class ProposalGrid extends AppScreen {
 	private WeatherViewModel model;
 
+	public JPanel locationPanel;
 	public JPanel daysPanel;
 
 	JPanel midPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -28,8 +29,12 @@ public class ProposalGrid extends AppScreen {
 		this.setPreferredSize(new Dimension(WIDTH, 360));
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+		locationPanel = locationPanel();
+		this.add(locationPanel);
+
 		daysPanel = new JPanel(new FlowLayout());
-		daysPanel.setBackground(Color.WHITE);
+		//daysPanel.setBackground(Color.WHITE);
+		daysPanel.setOpaque(false);
 
 		for(int i=0; i<buttonList.length; i++){
 			JButton dayButton = new JButton(model.getWeekDays().getDay(i));
@@ -46,11 +51,11 @@ public class ProposalGrid extends AppScreen {
 		String[] timeWeather = model.getWeatherForecast().getWeatherInTheDay();
 
 
-		JLabel morning = createIconLabel("11AM", "verySmall" + timeWeather[0] + ".png");
+		JLabel morning = createIconLabel("11AM", "small" + timeWeather[0] + ".png");
 		morning.setFont(new Font("Century Gothic", Font.BOLD, morningFont));
-		JLabel afternoon = createIconLabel("3PM", "verySmall" + timeWeather[1] + ".png");
+		JLabel afternoon = createIconLabel("3PM", "small" + timeWeather[1] + ".png");
 		afternoon.setFont(new Font("Century Gothic", Font.BOLD, afternoonFont));
-		JLabel evening = createIconLabel("7PM", "verySmall" + timeWeather[2] + ".png");
+		JLabel evening = createIconLabel("7PM", "small" + timeWeather[2] + ".png");
 		evening.setFont(new Font("Century Gothic", Font.BOLD, eveningFont));
 
 
@@ -63,7 +68,8 @@ public class ProposalGrid extends AppScreen {
 		timePanel.add(afternoon);
 		timePanel.add(Box.createRigidArea(new Dimension(0, 40)));
 		timePanel.add(evening);
-		timePanel.setBackground(Color.WHITE);
+		//timePanel.setBackground(Color.LIGHT_GRAY);
+		timePanel.setOpaque(false);
 		midPanel.add(timePanel);
 
 		ArrayList<weatherApp.model.eventRecommender.Event> suggestEvents = model.getEventRecommender().suggestEvents();
@@ -76,19 +82,35 @@ public class ProposalGrid extends AppScreen {
 		}
 
 		eventGrid.setVisible(true);
-		eventGrid.setBackground(Color.WHITE);
+		//eventGrid.setBackground(Color.WHITE);
+		eventGrid.setOpaque(false);
 		midPanel.add(eventGrid);
 
 		this.add(daysPanel);
 		this.add(midPanel);
-		midPanel.setBackground(Color.WHITE);
+		//midPanel.setBackground(Color.WHITE);
+		midPanel.setBackground(new Color(100,100,100,50));
+		//midPanel.setOpaque(false);
+		//this.setBackground(new Color(100,100,100,50));
 		this.setVisible(false);
 
 	}
 
+	public JPanel locationPanel() {
+		//Add the text label telling us what location the weather is given for
+		locationPanel = new JPanel();
+		JLabel location = new JLabel(model.getWeatherForecast().getLocation());
+		location.setFont(new Font("Century Gothic", Font.BOLD, cityFont));
+		location.setForeground(Color.WHITE);
+		locationPanel.add(location);
+		locationPanel.setOpaque(true);
+		locationPanel.setBackground(darkBlue);
+		return locationPanel;
+	}
+
 	public void addDaySelectionButtonListeners(ActionListener listener) {
 		for (int i = 0; i < 4; i++) {
-			JPanel dayPanel = (JPanel) this.getComponents()[0];
+			JPanel dayPanel = (JPanel) this.getComponents()[1];
 			JButton button = (JButton) dayPanel.getComponents()[i];
 			button.addActionListener(listener);
 		}
@@ -124,9 +146,9 @@ public class ProposalGrid extends AppScreen {
 		String[] timeWeather = model.getWeatherForecast().getWeatherInTheDay();
 
 
-		JLabel morning = createIconLabel("11AM", "verySmall" + timeWeather[0] + ".png");
-		JLabel afternoon = createIconLabel("3PM", "verySmall" + timeWeather[1] + ".png");
-		JLabel evening = createIconLabel("7PM", "verySmall" + timeWeather[2] + ".png");
+		JLabel morning = createIconLabel("11AM", "small" + timeWeather[0] + ".png");
+		JLabel afternoon = createIconLabel("3PM", "small" + timeWeather[1] + ".png");
+		JLabel evening = createIconLabel("7PM", "small" + timeWeather[2] + ".png");
 
 
 		evening.setAlignmentX(Component.LEFT_ALIGNMENT);
