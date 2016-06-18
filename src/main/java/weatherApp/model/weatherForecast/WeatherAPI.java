@@ -31,7 +31,7 @@ public class WeatherAPI
 		weatherForecastList = new ArrayList<Forecast>();
 	}
 
-	public void processWeatherRequest(String city){
+	void processWeatherRequest(String city){
 		weatherForecastList.clear();
 		String parsedLocation = "";
 		String[] processLocation = city.split(" ");
@@ -161,7 +161,7 @@ public class WeatherAPI
 		}
 	}
 
-	public boolean foundRequestedCity(){
+	boolean foundRequestedCity(){
 		return validLocation;
 	}
 

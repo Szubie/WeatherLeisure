@@ -73,7 +73,7 @@ public class WeatherScreen extends AppScreen {
 		this.add(weekWeather());
 	}
 
-	public JPanel locationPanel() {
+	private JPanel locationPanel() {
 		//Add the text label telling us what location the weather is given for
 		locationPanel = new JPanel();
 		location = new JLabel(model.getWeatherForecast().getLocation());
@@ -92,7 +92,7 @@ public class WeatherScreen extends AppScreen {
 		return locationEntry;
 	}*/
 
-	public JPanel locationEntry(){
+	private JPanel locationEntry(){
 		locationEntryPanel = new JPanel();
 
 		locationEntryPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -109,7 +109,7 @@ public class WeatherScreen extends AppScreen {
 		return locationEntryPanel;
 	}
 
-	public JPanel currentTemperature(){
+	private JPanel currentTemperature(){
 		currentTemperature = new JPanel();
 		JLabel temp = new JLabel(model.getWeatherForecast().getCurrentAverageTemp());
 		temp.setFont(new Font("Century Gothic", Font.BOLD, cityFont));
@@ -128,7 +128,7 @@ public class WeatherScreen extends AppScreen {
 		locationEntry.addActionListener(listener);
 	}
 
-	public JPanel weatherDisplay() {
+	private JPanel weatherDisplay() {
 		//Create an ImageIcon to display the current weather
 		String imageExtension = ".png";
 		String weatherPic = imagesFolder + model.getWeatherForecast().getTodayWeather() + imageExtension;
@@ -144,7 +144,7 @@ public class WeatherScreen extends AppScreen {
 		return weatherDisplay;
 	}
 
-	public JPanel highLowMain() {
+	private JPanel highLowMain() {
 		highLowMain = new JPanel(new FlowLayout());
 		String high = "High: ";
 		String low = "Low: ";
@@ -162,7 +162,7 @@ public class WeatherScreen extends AppScreen {
 	}
 
 
-	public JPanel weatherDescription() {
+	private JPanel weatherDescription() {
 		weatherDescription = new JPanel(new FlowLayout());
 		String value = model.getWeatherForecast().getCurrentWeatherDescription();
 		//Here we would query weatherApp.model to retrieve the temperatures
@@ -177,7 +177,7 @@ public class WeatherScreen extends AppScreen {
 
 	}
 
-	public JPanel weekWeather() {
+	private JPanel weekWeather() {
 		//create a panel to display weather for the week ahead
 		weekWeather = new JPanel();
 		weekWeather.setPreferredSize(new Dimension(WIDTH, 100));
@@ -215,7 +215,7 @@ public class WeatherScreen extends AppScreen {
 	}
 
 	//Set the location to the text in the text area
-	public void updateLocation() {
+	void updateLocation() {
 
 		locationEntry.setText("search bar");
 		String currentWeather = model.getWeatherForecast().getTodayWeather().toLowerCase();

@@ -251,8 +251,4 @@ public class EventRecommender {
 	public void setDrinking(Boolean value) {
 		drinking = !drinking;
 	}
-
-	public void setDefaultLocation(Boolean value) {
-		defaultLocation = !defaultLocation;
-	}
 }

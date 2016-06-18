@@ -38,7 +38,6 @@ public class WeatherController{
 	public void addDaySelectionButtonListeners(final WeatherView view){
 		view.proposalGrid.addDaySelectionButtonListeners(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				view.proposalGrid.disSelectAll(view.proposalGrid.daysPanel);
 				JButton but = (JButton) e.getSource();
 				String weekDay = but.getText();
 				//make a call to the Weather Model to set the week day accordingly
@@ -96,8 +95,7 @@ public class WeatherController{
 						String text = searchBar.getText();
 						model.getWeatherForecast().setLocation(text);
 						if(model.getWeatherForecast().isValidLocation()){
-							view.weatherScreen.updateLocation();
-							view.proposalGrid.locationPanel.revalidate();
+							view.updateLocation();
 						}
 						else{
 							JOptionPane.showMessageDialog(view.frame, "Sorry, couldn't find that location!");
@@ -148,6 +146,26 @@ public class WeatherController{
 	}
 
 	public void addSettingsPageListeners(final WeatherView view){
+		addSettingsLocationInputListener(view);
+		addCheckBoxListeners(view);
+	}
+
+	private void addSettingsLocationInputListener(final WeatherView view){
+		view.settingsScreen.addLocationInputListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				JTextField textField = (JTextField) e.getSource();
+				model.getWeatherForecast().setLocation(textField.getText());
+				if(model.getWeatherForecast().isValidLocation()){
+					view.updateLocation();
+				}
+				else{
+					JOptionPane.showMessageDialog(view.frame, "Sorry, couldn't find that location!");
+				}
+			}
+		});
+	}
+
+	private void addCheckBoxListeners(final WeatherView view){
 		view.settingsScreen.addCultureBoxListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -242,8 +260,6 @@ public class WeatherController{
 				};
 			}
 		});
-
-
 	}
 
 

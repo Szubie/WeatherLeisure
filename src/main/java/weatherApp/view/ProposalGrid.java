@@ -89,14 +89,14 @@ public class ProposalGrid extends AppScreen {
 		this.add(daysPanel);
 		this.add(midPanel);
 		//midPanel.setBackground(Color.WHITE);
-		midPanel.setBackground(new Color(100,100,100,50));
+		midPanel.setBackground(new Color(200,200,200));
 		//midPanel.setOpaque(false);
 		//this.setBackground(new Color(100,100,100,50));
 		this.setVisible(false);
 
 	}
 
-	public JPanel locationPanel() {
+	private JPanel locationPanel() {
 		//Add the text label telling us what location the weather is given for
 		locationPanel = new JPanel();
 		JLabel location = new JLabel(model.getWeatherForecast().getLocation());
@@ -109,7 +109,7 @@ public class ProposalGrid extends AppScreen {
 	}
 
 	public void addDaySelectionButtonListeners(ActionListener listener) {
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < buttonList.length; i++) {
 			JPanel dayPanel = (JPanel) this.getComponents()[1];
 			JButton button = (JButton) dayPanel.getComponents()[i];
 			button.addActionListener(listener);
@@ -124,18 +124,9 @@ public class ProposalGrid extends AppScreen {
 	}
 
 
-	public JButton formatButton(JButton button) {
+	private JButton formatButton(JButton button) {
 		button.setFont(new Font("Century Gothic", Font.BOLD, weekDaysFont));
 		return button;
-	}
-
-	//
-	public void disSelectAll(JPanel daysPanel) {
-		for (Component button : daysPanel.getComponents()) {
-			button.setBackground(Color.WHITE);
-			button.setForeground(Color.BLACK);
-
-		}
 	}
 
 
@@ -179,7 +170,12 @@ public class ProposalGrid extends AppScreen {
 
 	}
 
-	public JLabel createIconLabel(String label, String picPath) {
+	void updateProposalLocation(){
+		JLabel locationLabel = (JLabel) locationPanel.getComponent(0);
+		locationLabel.setText(model.getWeatherForecast().getLocation());
+	}
+
+	private JLabel createIconLabel(String label, String picPath) {
 		String iconPath = imagesFolder + picPath;
 		java.net.URL picURL = classLoader.getResource(iconPath);
 		ImageIcon image = new ImageIcon(picURL);

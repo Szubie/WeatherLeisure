@@ -47,32 +47,12 @@ public class WeekDays{
 		return daysOfWeek;
 	}
 
-	public void setWeekDay(String day){
-		weekDay = day;
-	}
-
-	public String getWeekDay(){
-		return daysOfWeek[0];
-	}
-
-	//public String getFirstDay(){
-	//	return daysOfWeek[1];
-	//}
-	
-	public String getSecondDay(){
-		return daysOfWeek[2];
-	}
-	
-	public String getThirdDay(){
-		return daysOfWeek[3];
-	}
-	
-	public String getFourthDay(){
-		return daysOfWeek[4];
-	}
-
 	public String getDay(int dayNo){
 		return daysOfWeek[dayNo];
+	}
+
+	public void setWeekDay(String day){
+		weekDay = day;
 	}
 
 }

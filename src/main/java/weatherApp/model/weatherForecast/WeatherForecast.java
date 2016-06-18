@@ -38,7 +38,7 @@ public class WeatherForecast{
 		generateWeatherInTheDays();
 	}
 
-	public void getAPIdata(String location, WeatherAPI weatherAPI) throws IndexOutOfBoundsException{
+	private void getAPIdata(String location, WeatherAPI weatherAPI) throws IndexOutOfBoundsException{
 		try{
 			weatherAPI.processWeatherRequest(location);
 		}

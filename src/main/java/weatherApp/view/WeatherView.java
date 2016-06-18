@@ -72,14 +72,14 @@ public class WeatherView extends AppScreen {
 	}
 
 
-	public void startWeatherScreen(JFrame frame) {
+	private void startWeatherScreen(JFrame frame) {
 		//Add the components to our frame
 		//frame.add(topBar());
 		weatherScreen = new WeatherScreen(model);
 		frame.add(weatherScreen);
 		proposalGrid = new ProposalGrid(model);
 		frame.add(proposalGrid);
-		settingsScreen = new SettingsScreen();
+		settingsScreen = new SettingsScreen(model);
 		frame.add(settingsScreen);
 		bottomPanel = new BottomPanel();
 		frame.add(bottomPanel);
@@ -88,24 +88,11 @@ public class WeatherView extends AppScreen {
 		showWeatherMain();
 	}
 
-
-	/*public JPanel topBar() {
-		//create the top panel telling us what screen we are in
-		topBar = new JPanel();
-		topBar.setPreferredSize(new Dimension(WIDTH, 80));
-		topBar.setBackground(darkBlue);
-		topBarLabel = new JLabel("Weather", JLabel.CENTER);
-		topBarLabel.setForeground(Color.WHITE);
-		topBarLabel.setFont(new Font("Century Gothic", Font.BOLD, screenLabelfont));
-		topBar.add(topBarLabel);
-		return topBar;
-	}*/
-
-	/*public void updateTopBar(String text) {
-		topBarLabel.setText(text);
-	}*/
-
-
+	public void updateLocation(){
+		weatherScreen.updateLocation();
+		proposalGrid.updateProposalLocation();
+		settingsScreen.updateSettingsLocationLabel();
+	}
 
 	public void showProposal() {
 		//Set the current day button to be selected by default
@@ -114,7 +101,6 @@ public class WeatherView extends AppScreen {
 		proposalGrid.locationPanel.setVisible(true);
 		proposalGrid.setVisible(true);
 		proposalGrid.daysPanel.setVisible(true);
-		//updateTopBar("Activities");
 	}
 
 	public void hideProposal() {
@@ -127,7 +113,6 @@ public class WeatherView extends AppScreen {
 	public void showSettings() {
 		settingsScreen.setVisible(true);
 		settingsScreen.settingsPanel.setVisible(true);
-		//updateTopBar("Settings");
 	}
 
 	public void hideSettings() {
@@ -160,7 +145,7 @@ public class WeatherView extends AppScreen {
 		weatherScreen.currentTemperature.setVisible(true);
 		weatherScreen.filler.setVisible(true);
 		weatherScreen.locationEntryPanel.setVisible(true);
-		//updateTopBar("Weather");
 	}
+
 
 }

@@ -18,14 +18,9 @@ public class BottomPanel extends AppScreen {
 
 	public BottomPanel() {
 
-
 		//create a bottom navigation panel with all the necessary buttons
 		this.setPreferredSize(new Dimension(WIDTH, 60));
-
 		this.setBackground(darkBlue);
-
-
-
 
 		settingsButton = buildIconButton("Settings");
 		weatherButton = buildIconButton("Weather");
@@ -38,7 +33,7 @@ public class BottomPanel extends AppScreen {
 		this.setVisible(true);
 	}
 
-	public JButton buildIconButton(String text){
+	private JButton buildIconButton(String text){
 		String path = "images/" + text + "Button.png";
 		JButton button;
 		try {
