@@ -45,6 +45,7 @@ public class WeatherForecast{
 		catch(NullPointerException e){
 			if(!previousAttemptToAccessAPI){
 				System.out.println("Retrying Yahoo Weather API...");
+				previousAttemptToAccessAPI = true;
 				getAPIdata(location, weatherAPI);
 			}
 			else{
@@ -53,6 +54,7 @@ public class WeatherForecast{
 			}
 		}
 		catch(IndexOutOfBoundsException e){
+			System.out.println("Out of bounds exception");
 			getAPIdata(location, weatherAPI);
 		}
 		if(weatherAPI.foundRequestedCity()) {
@@ -106,20 +108,23 @@ public class WeatherForecast{
 		return avgTemp;
 	}
 
-	private String processCode(String stringCode){
+	private String processCode(String stringCode) {
 		int code = Integer.parseInt(stringCode);
-		String result="";
-		if(code<=18 || code==35 || code>=37 && code<=43 || code>=45 &&code<=47){
-			result="Rain";
-		}
-		else if(code>=19 && code<=26){
-			result="Cloud";
-		}
-		else if( code>=27 && code<=30 || code==44){
-			result="PartCloud";
-		}
-		else if(code>=31 && code<= 34 || code==36){
-			result="Sun";
+		String result = "";
+		if (code >= 5 && code <= 12 || code >= 39 && code <= 40 || code == 18) {
+			result = "Rain";
+		} else if (code >= 19 && code <= 22 || code == 26) {
+			result = "Cloud";
+		} else if (code >= 27 && code <= 30 || code == 44) {
+			result = "PartCloud";
+		} else if (code >= 31 && code <= 34 || code == 36) {
+			result = "Sun";
+		} else if (code <= 2 || code >= 23 && code <= 25) {
+			result = "Wind";
+		} else if (code >= 3 && code <= 4 || code >= 37 && code <= 38 || code == 47 || code == 45) {
+			result = "Lightning";
+		} else if (code >= 13 && code <= 17 || code == 35 || code >= 41 && code <= 43 || code == 46) {
+			result = "Snow";
 		}
 		return result;
 	}
