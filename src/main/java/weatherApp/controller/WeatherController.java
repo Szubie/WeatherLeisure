@@ -48,7 +48,7 @@ public class WeatherController{
 		});
 	}
 
-	public void addSearchBarActionListener(final WeatherView view){
+	/*public void addSearchBarActionListener(final WeatherView view){
 	    //Here is an action listener for the text box to update the location in the weatherApp.model
         view.weatherScreen.addSearchBarListener(
 				new PopupMenuListener() {
@@ -71,12 +71,12 @@ public class WeatherController{
 							String[] splitText = text.split(",");
 							cityName = splitText[0];
 						}
-						/*if (model.getListOfCities().contains(cityName)) {
+						if (model.getListOfCities().contains(cityName)) {
 							model.getWeatherForecast().setLocation(text);
 							view.weatherScreen.updateLocation();
 						} else {
 							JOptionPane.showMessageDialog(view.frame, "Sorry, that location either does not exist or is not supported at this time.");
-						}*/
+						}
 						model.getWeatherForecast().setLocation(text);
 						if(model.getWeatherForecast().isValidLocation()){
 							view.weatherScreen.updateLocation();
@@ -86,10 +86,29 @@ public class WeatherController{
 						}
 					}
 				});
+	}*/
+
+	public void addSearchBarActionListener(final WeatherView view){
+		view.weatherScreen.addSearchBarListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						JTextField searchBar = (JTextField) e.getSource();
+						String text = searchBar.getText();
+						model.getWeatherForecast().setLocation(text);
+						if(model.getWeatherForecast().isValidLocation()){
+							view.weatherScreen.updateLocation();
+							view.proposalGrid.locationPanel.revalidate();
+						}
+						else{
+							JOptionPane.showMessageDialog(view.frame, "Sorry, couldn't find that location!");
+						}
+					}
+				}
+		);
 	}
 
     public void addWeatherButtonListener(final WeatherView view){
-    	view.addWeatherButtonListener(
+    	view.bottomPanel.addWeatherButtonListener(
     		new ActionListener(){
 	            public void actionPerformed(ActionEvent e){
 					for(WeatherView view : viewList) {
@@ -102,7 +121,7 @@ public class WeatherController{
 	}
 
 	public void addProposalButtonListener(final WeatherView view){
-    	view.addProposalButtonListener(
+    	view.bottomPanel.addProposalButtonListener(
     		new ActionListener(){
 	            public void actionPerformed(ActionEvent e){
 					for(WeatherView view : viewList) {
@@ -116,7 +135,7 @@ public class WeatherController{
 	}
 
 	public void addSettingsButtonListener(final WeatherView view){
-		view.addSettingsButtonListener(
+		view.bottomPanel.addSettingsButtonListener(
 			new ActionListener(){
 		        public void actionPerformed(ActionEvent e){
 					for(WeatherView view : viewList) {
