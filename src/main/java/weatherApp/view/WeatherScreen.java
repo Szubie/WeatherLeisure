@@ -103,6 +103,7 @@ public class WeatherScreen extends AppScreen {
 		locationEntry.setForeground(Color.WHITE);
 		locationEntry.setBorder(BorderFactory.createEmptyBorder());
 		locationEntry.setOpaque(false);
+		locationEntry.setPreferredSize(new Dimension(WIDTH ,12));
 		locationEntryPanel.add(locationEntry);
 		locationEntryPanel.setBackground(new Color(150,150,150,150));
 		locationEntryPanel.setOpaque(false);
