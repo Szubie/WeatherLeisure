@@ -7,8 +7,8 @@ public class Event {
 	Boolean relaxation;
 	Boolean shopping;
 	Boolean sport;
-	Boolean eating;
-	Boolean drinking;
+	Boolean restaurants;
+	Boolean bars;
 
 	String name;
 	String picPath;
@@ -21,8 +21,8 @@ public class Event {
 		relaxation = false;
 		shopping = false;
 		sport = false;
-		eating = false;
-		drinking = false;
+		restaurants = false;
+		bars = false;
 
 	}
 
@@ -55,12 +55,12 @@ public class Event {
 	}
 
 
-	public void eating() {
-		this.eating = true;
+	public void restaurants() {
+		this.restaurants = true;
 	}
 
-	public void drinking() {
-		this.drinking = true;
+	public void bars() {
+		this.bars = true;
 	}
 
 
@@ -85,12 +85,12 @@ public class Event {
 		return sport;
 	}
 
-	public Boolean isEating() {
-		return eating;
+	public Boolean isRestaurants() {
+		return restaurants;
 	}
 
-	public Boolean isDrinking() {
-		return drinking;
+	public Boolean isBars() {
+		return bars;
 	}
 
 

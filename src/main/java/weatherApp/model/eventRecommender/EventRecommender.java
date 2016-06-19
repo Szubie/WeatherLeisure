@@ -1,29 +1,19 @@
 package weatherApp.model.eventRecommender;
 
+import weatherApp.model.settings.Setting;
+import weatherApp.model.settings.UserSettings;
 import weatherApp.model.weatherForecast.WeatherForecast;
 
 import java.util.Random;
 import java.util.Collections;
 import java.util.ArrayList;
 
-
 public class EventRecommender {
 
 	private WeatherForecast weatherForecast;
+	private UserSettings settings;
 
 	private Random rand = new Random();
-
-	//Here are the daytrip planning suggestions
-	private Boolean culture;
-	private Boolean entertainment;
-	private Boolean relaxation;
-	private Boolean shopping;
-	private Boolean sport;
-	private Boolean eating;
-	private Boolean drinking;
-
-	//Currently doesn't do anything
-	private Boolean defaultLocation;
 
 	//Number of suggestions per time in the day
 	private int eventsPerRow;
@@ -34,24 +24,19 @@ public class EventRecommender {
 
 
 	public static void main(String[] args) {
-		EventRecommender test = new EventRecommender(new WeatherForecast("London, UK"), 3);
+		EventRecommender test = new EventRecommender(new WeatherForecast("London, UK"), new UserSettings(), 3);
 		ArrayList<Event> testArray = test.suggestEvents();
 		System.out.println(testArray.size());
 	}
 
 
-	public EventRecommender(WeatherForecast weatherForecast, int eventsPerRow) {
+	public EventRecommender(WeatherForecast weatherForecast, UserSettings settings, int eventsPerRow) {
 		this.weatherForecast = weatherForecast;
 		this.eventsPerRow = eventsPerRow;
+		this.settings = settings;
 		createEvents();
-		culture = true;
-		entertainment = true;
-		relaxation = true;
-		shopping = true;
-		sport = true;
-		eating = true;
-		drinking = true;
 	}
+
 
 	//Model returns 9 events for the given day, 3 per time in the day
 	public ArrayList<Event> suggestEvents() {
@@ -119,38 +104,38 @@ public class EventRecommender {
 
 	private Boolean matchRequirements(Event event) {
 
-		if (culture) {
+		if (settings.getSetting("Culture")) {
 			if (event.isCulture()) {
 				return true;
 			}
 		}
-		if (entertainment) {
+		if (settings.getSetting("Entertainment")) {
 			if (event.isEntertainment()) {
 				return true;
 			}
 		}
-		if (relaxation) {
+		if (settings.getSetting("Relaxation")) {
 			if (event.isRelaxation()) {
 				return true;
 			}
 		}
-		if (shopping) {
+		if (settings.getSetting("Shopping")) {
 			if (event.isShopping()) {
 				return true;
 			}
 		}
-		if (sport) {
+		if (settings.getSetting("Sport")) {
 			if (event.isSport()) {
 				return true;
 			}
 		}
-		if (eating) {
-			if (event.isEating()) {
+		if (settings.getSetting("Restaurants")) {
+			if (event.isRestaurants()) {
 				return true;
 			}
 		}
-		if (drinking) {
-			if (event.isDrinking()) {
+		if (settings.getSetting("Bars")) {
+			if (event.isBars()) {
 				return true;
 			}
 		}
@@ -201,9 +186,9 @@ public class EventRecommender {
 		dryWeather.add(thames);
 
 		Event radio = new Event("Radio Bar", "radioBar.jpg");
-		radio.eating();
+		radio.restaurants();
 		radio.relaxation();
-		radio.drinking();
+		radio.bars();
 		dryWeather.add(radio);
 
 		Event primerose = new Event("Primrose Hill", "primeroseHill.jpg");
@@ -220,35 +205,5 @@ public class EventRecommender {
 		dryWeather.add(oxfordStreet);
 
 
-	}
-
-
-	//Set events tags methods
-	public void setCulture(Boolean value) {
-		culture = !culture;
-	}
-
-	public void setEntertainment(Boolean value) {
-		entertainment = !entertainment;
-	}
-
-	public void setRelaxation(Boolean value) {
-		relaxation = !relaxation;
-	}
-
-	public void setShopping(Boolean value) {
-		shopping = !shopping;
-	}
-
-	public void setSport(Boolean value) {
-		sport = !sport;
-	}
-
-	public void setEating(Boolean value) {
-		eating = !eating;
-	}
-
-	public void setDrinking(Boolean value) {
-		drinking = !drinking;
 	}
 }

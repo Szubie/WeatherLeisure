@@ -154,9 +154,11 @@ public class WeatherController{
 		view.settingsScreen.addLocationInputListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				JTextField textField = (JTextField) e.getSource();
-				model.getWeatherForecast().setLocation(textField.getText());
+				String location = textField.getText();
+				model.getWeatherForecast().setLocation(location);
 				if(model.getWeatherForecast().isValidLocation()){
 					view.updateLocation();
+					model.getSettings().setDefaultLocation(location);
 				}
 				else{
 					JOptionPane.showMessageDialog(view.frame, "Sorry, couldn't find that location!");
@@ -170,11 +172,11 @@ public class WeatherController{
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange() == ItemEvent.SELECTED) {
-					model.getEventRecommender().setCulture(true);
+					model.getSettings().setCulture(true);
 					view.proposalGrid.updateProposalGrid();
 
 				} else {
-					model.getEventRecommender().setCulture(false);
+					model.getSettings().setCulture(false);
 					view.proposalGrid.updateProposalGrid();
 
 				};
@@ -185,11 +187,11 @@ public class WeatherController{
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
-					model.getEventRecommender().setEntertainment(true);
+					model.getSettings().setEntertainment(true);
 					view.proposalGrid.updateProposalGrid();
 
 				} else {
-					model.getEventRecommender().setEntertainment(false);
+					model.getSettings().setEntertainment(false);
 					view.proposalGrid.updateProposalGrid();
 
 				};
@@ -200,10 +202,10 @@ public class WeatherController{
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
-					model.getEventRecommender().setRelaxation(true);
+					model.getSettings().setRelaxation(true);
 					view.proposalGrid.updateProposalGrid();
 				} else {
-					model.getEventRecommender().setRelaxation(false);
+					model.getSettings().setRelaxation(false);
 					view.proposalGrid.updateProposalGrid();
 				};
 			}
@@ -213,10 +215,10 @@ public class WeatherController{
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
-					model.getEventRecommender().setShopping(true);
+					model.getSettings().setShopping(true);
 					view.proposalGrid.updateProposalGrid();
 				} else {
-					model.getEventRecommender().setShopping(false);
+					model.getSettings().setShopping(false);
 					view.proposalGrid.updateProposalGrid();
 				};
 			}
@@ -226,10 +228,10 @@ public class WeatherController{
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
-					model.getEventRecommender().setSport(true);
+					model.getSettings().setSport(true);
 					view.proposalGrid.updateProposalGrid();
 				} else {
-					model.getEventRecommender().setSport(false);
+					model.getSettings().setSport(false);
 					view.proposalGrid.updateProposalGrid();
 				};
 			}
@@ -239,10 +241,10 @@ public class WeatherController{
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
-					model.getEventRecommender().setEating(true);
+					model.getSettings().setEating(true);
 					view.proposalGrid.updateProposalGrid();
 				} else {
-					model.getEventRecommender().setEating(false);
+					model.getSettings().setEating(false);
 					view.proposalGrid.updateProposalGrid();
 				};
 			}
@@ -252,10 +254,10 @@ public class WeatherController{
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange() == ItemEvent.SELECTED) {
-					model.getEventRecommender().setDrinking(true);
+					model.getSettings().setDrinking(true);
 					view.proposalGrid.updateProposalGrid();
 				} else {
-					model.getEventRecommender().setDrinking(false);
+					model.getSettings().setDrinking(false);
 					view.proposalGrid.updateProposalGrid();
 				};
 			}

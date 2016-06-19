@@ -76,7 +76,9 @@ public class SettingsScreen extends AppScreen {
 
 	private JCheckBox buildSettingsCheckbox(String title){
 		JCheckBox checkBox = new JCheckBox(title);
-		checkBox.setSelected(true);
+		if(model.getSettings().getSetting(title)){
+			checkBox.setSelected(true);
+		}
 		checkBox.setFont(checkBox.getFont().deriveFont(settingsFont));
 		checkBox.setBackground(Color.WHITE);
 		return checkBox;
