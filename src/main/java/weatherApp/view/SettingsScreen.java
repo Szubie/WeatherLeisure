@@ -1,6 +1,6 @@
 package weatherApp.view;
 
-import weatherApp.model.WeatherViewModel;
+import weatherApp.model.WeatherModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +11,7 @@ import java.awt.event.ItemListener;
  * Created by Benjy on 07/06/2016.
  */
 public class SettingsScreen extends AppScreen {
-	public WeatherViewModel model;
+	public WeatherModel model;
 
 	public JPanel settingsPanel;
 
@@ -25,7 +25,7 @@ public class SettingsScreen extends AppScreen {
 	public JCheckBox eating;
 	public JCheckBox drinking;
 
-	public SettingsScreen(WeatherViewModel model) {
+	public SettingsScreen(WeatherModel model) {
 		this.model = model;
 		locationLabel = new JLabel("Default Location:");
 		locationLabel.setFont(locationLabel.getFont().deriveFont(settingsFont));

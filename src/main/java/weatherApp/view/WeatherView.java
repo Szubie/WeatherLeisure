@@ -1,17 +1,13 @@
 package weatherApp.view;
 
-import weatherApp.model.WeatherViewModel;
+import weatherApp.model.WeatherModel;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.Color;
-import java.awt.event.*;
-import java.net.URL;
 
 
 public class WeatherView extends AppScreen {
 
-	WeatherViewModel model;
+	WeatherModel model;
 
 	//The main application frame
 	public JFrame frame;
@@ -27,7 +23,7 @@ public class WeatherView extends AppScreen {
 	public SettingsScreen settingsScreen;
 	public WeatherScreen weatherScreen;
 
-	public WeatherView(WeatherViewModel model, int device) {
+	public WeatherView(WeatherModel model, int device) {
 
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,6 +72,7 @@ public class WeatherView extends AppScreen {
 		//Add the components to our frame
 		//frame.add(topBar());
 		weatherScreen = new WeatherScreen(model);
+		model.getWeatherForecast().addObserver(weatherScreen);
 		frame.add(weatherScreen);
 		proposalGrid = new ProposalGrid(model);
 		frame.add(proposalGrid);
@@ -89,7 +86,7 @@ public class WeatherView extends AppScreen {
 	}
 
 	public void updateLocation(){
-		weatherScreen.updateLocation();
+		//weatherScreen.updateLocation();
 		proposalGrid.updateProposalLocation();
 		settingsScreen.updateSettingsLocationLabel();
 	}

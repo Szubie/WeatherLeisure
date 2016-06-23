@@ -1,21 +1,19 @@
 package weatherApp.controller;
 
-import weatherApp.model.WeatherViewModel;
+import weatherApp.model.WeatherModel;
 import weatherApp.view.WeatherView;
 
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.PopupMenuEvent;
-import javax.swing.event.PopupMenuListener;
 import java.util.ArrayList;
 
 
 public class WeatherController{
 
 	private ArrayList<WeatherView> viewList = new ArrayList<WeatherView>();
-	private WeatherViewModel model;
+	private WeatherModel model;
 
-	public WeatherController(WeatherView view, WeatherViewModel model){
+	public WeatherController(WeatherView view, WeatherModel model){
 		this.model=model;
 		addActionListeners(view);
 		viewList.add(view);
