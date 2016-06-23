@@ -6,27 +6,27 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by Benjy on 07/06/2016.
  */
-public class SettingsScreen extends AppScreen {
+public class SettingsScreen extends AppScreen implements Observer{
 	public WeatherModel model;
 
 	public JPanel settingsPanel;
 
 	public JLabel locationLabel;
 	public JTextField locationInput;
-	public JCheckBox culture;
-	public JCheckBox entertainment;
-	public JCheckBox relaxation;
-	public JCheckBox shopping;
-	public JCheckBox sport;
-	public JCheckBox eating;
-	public JCheckBox drinking;
+
+	public ArrayList<JCheckBox> settingsCheckBoxList = new ArrayList<JCheckBox>();
 
 	public SettingsScreen(WeatherModel model) {
 		this.model = model;
+		model.getSettings().addObserver(this);
+
 		locationLabel = new JLabel("Default Location:");
 		locationLabel.setFont(locationLabel.getFont().deriveFont(settingsFont));
 		locationLabel.setBackground(Color.WHITE);
@@ -36,13 +36,13 @@ public class SettingsScreen extends AppScreen {
 		locationInput.setBackground(Color.WHITE);
 		locationInput.setMaximumSize(new Dimension(WIDTH, 23));
 
-		culture = buildSettingsCheckbox("Culture");
-		entertainment = buildSettingsCheckbox("Entertainment");
-		relaxation = buildSettingsCheckbox("Relaxation");
-		shopping = buildSettingsCheckbox("Shopping");
-		sport = buildSettingsCheckbox("Sport");
-		eating = buildSettingsCheckbox("Restaurants");
-		drinking = buildSettingsCheckbox("Bars");
+		buildSettingsCheckbox("Culture");
+		buildSettingsCheckbox("Entertainment");
+		buildSettingsCheckbox("Relaxation");
+		buildSettingsCheckbox("Shopping");
+		buildSettingsCheckbox("Sport");
+		buildSettingsCheckbox("Restaurants");
+		buildSettingsCheckbox("Bars");
 
 
 		this.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -55,13 +55,9 @@ public class SettingsScreen extends AppScreen {
 		settingsPanel.add(locationInput);
 		settingsPanel.add(Box.createVerticalStrut(20));
 
-		settingsPanel.add(culture);
-		settingsPanel.add(entertainment);
-		settingsPanel.add(relaxation);
-		settingsPanel.add(shopping);
-		settingsPanel.add(sport);
-		settingsPanel.add(eating);
-		settingsPanel.add(drinking);
+		for(JCheckBox checkBox : settingsCheckBoxList){
+			settingsPanel.add(checkBox);
+		}
 
 		settingsPanel.setPreferredSize(new Dimension(WIDTH, 400));
 		settingsPanel.setVisible(false);
@@ -74,45 +70,34 @@ public class SettingsScreen extends AppScreen {
 		locationInput.addActionListener(listener);
 	}
 
-	private JCheckBox buildSettingsCheckbox(String title){
+	private void buildSettingsCheckbox(String title){
 		JCheckBox checkBox = new JCheckBox(title);
 		if(model.getSettings().getSetting(title)){
 			checkBox.setSelected(true);
 		}
 		checkBox.setFont(checkBox.getFont().deriveFont(settingsFont));
 		checkBox.setBackground(Color.WHITE);
-		return checkBox;
+		settingsCheckBoxList.add(checkBox);
 	}
 
-	void updateSettingsLocationLabel(){
-		locationInput.setText(model.getWeatherForecast().getLocation());
+	public void addCheckBoxListeners(ItemListener listener){
+		for(JCheckBox checkBox : settingsCheckBoxList){
+			checkBox.addItemListener(listener);
+		}
 	}
 
-	public void addCultureBoxListener(ItemListener listener) {
-		culture.addItemListener(listener);
-	}
-
-	public void addEntertainmentBoxListener(ItemListener listener) {
-		entertainment.addItemListener(listener);
-	}
-
-	public void addRelaxationBoxListener(ItemListener listener) {
-		relaxation.addItemListener(listener);
-	}
-
-	public void addShoppingBoxListener(ItemListener listener) {
-		shopping.addItemListener(listener);
-	}
-
-	public void addSportBoxListener(ItemListener listener) {
-		sport.addItemListener(listener);
-	}
-
-	public void addEatingBoxListener(ItemListener listener) {
-		eating.addItemListener(listener);
-	}
-
-	public void addDrinkingBoxListener(ItemListener listener) {
-		drinking.addItemListener(listener);
+	@Override
+	public void update(Observable o, Object arg) {
+		if(o == model.getSettings()){
+			for(JCheckBox checkBox : settingsCheckBoxList){
+				String setting = checkBox.getText();
+				if(model.getSettings().getSetting(setting) == true){
+					checkBox.setSelected(true);
+				}
+				else{
+					checkBox.setSelected(false);
+				}
+			}
+		}
 	}
 }

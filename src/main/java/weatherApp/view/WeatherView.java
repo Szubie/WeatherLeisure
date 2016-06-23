@@ -12,13 +12,8 @@ public class WeatherView extends AppScreen {
 	//The main application frame
 	public JFrame frame;
 
-
-	//JLabel topBarLabel;
-	//JPanel topBar;
-
 	//Global JFrame elements,
 	public BottomPanel bottomPanel;
-
 	public ProposalGrid proposalGrid;
 	public SettingsScreen settingsScreen;
 	public WeatherScreen weatherScreen;
@@ -70,9 +65,7 @@ public class WeatherView extends AppScreen {
 
 	private void startWeatherScreen(JFrame frame) {
 		//Add the components to our frame
-		//frame.add(topBar());
 		weatherScreen = new WeatherScreen(model);
-		model.getWeatherForecast().addObserver(weatherScreen);
 		frame.add(weatherScreen);
 		proposalGrid = new ProposalGrid(model);
 		frame.add(proposalGrid);
@@ -85,11 +78,6 @@ public class WeatherView extends AppScreen {
 		showWeatherMain();
 	}
 
-	public void updateLocation(){
-		//weatherScreen.updateLocation();
-		proposalGrid.updateProposalLocation();
-		settingsScreen.updateSettingsLocationLabel();
-	}
 
 	public void showProposal() {
 		//Set the current day button to be selected by default

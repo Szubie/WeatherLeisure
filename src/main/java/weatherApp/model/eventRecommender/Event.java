@@ -2,16 +2,16 @@ package weatherApp.model.eventRecommender;
 
 public class Event {
 
-	Boolean culture;
-	Boolean entertainment;
-	Boolean relaxation;
-	Boolean shopping;
-	Boolean sport;
-	Boolean restaurants;
-	Boolean bars;
+	private Boolean culture;
+	private Boolean entertainment;
+	private Boolean relaxation;
+	private Boolean shopping;
+	private Boolean sport;
+	private Boolean restaurants;
+	private Boolean bars;
 
-	String name;
-	String picPath;
+	private String name;
+	private String picPath;
 
 	public Event(String name, String path) {
 		this.name = name;

@@ -6,19 +6,21 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by Benjy on 07/06/2016.
  */
-public class ProposalGrid extends AppScreen {
+public class ProposalGrid extends AppScreen implements Observer {
 	private WeatherModel model;
 
-	public JPanel locationPanel;
-	public JPanel daysPanel;
+	JPanel locationPanel;
+	JPanel daysPanel;
 
-	JPanel midPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-	JPanel timePanel = new JPanel();
-	JPanel eventGrid = new JPanel(new GridLayout(3, 3, 7, 7));
+	private JPanel midPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+	private JPanel timePanel = new JPanel();
+	private JPanel eventGrid = new JPanel(new GridLayout(3, 3, 7, 7));
 
 	JButton[] buttonList = new JButton[5];
 
@@ -26,6 +28,8 @@ public class ProposalGrid extends AppScreen {
 
 	public ProposalGrid(WeatherModel model) {
 		this.model = model;
+		model.getWeatherForecast().addObserver(this);
+
 		this.setPreferredSize(new Dimension(WIDTH, 360));
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -170,7 +174,7 @@ public class ProposalGrid extends AppScreen {
 
 	}
 
-	void updateProposalLocation(){
+	private void updateProposalLocation(){
 		JLabel locationLabel = (JLabel) locationPanel.getComponent(0);
 		locationLabel.setText(model.getWeatherForecast().getLocation());
 	}
@@ -191,4 +195,10 @@ public class ProposalGrid extends AppScreen {
 	}
 
 
+	@Override
+	public void update(Observable o, Object arg) {
+		if(o == model.getWeatherForecast()){
+			updateProposalLocation();
+		}
+	}
 }

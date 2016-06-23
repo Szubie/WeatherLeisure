@@ -45,45 +45,6 @@ public class WeatherController{
 		});
 	}
 
-	/*public void addSearchBarActionListener(final WeatherView view){
-	    //Here is an action listener for the text box to update the location in the weatherApp.model
-        view.weatherScreen.addSearchBarListener(
-				new PopupMenuListener() {
-
-					@Override
-					public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-					}
-
-
-					@Override
-					public void popupMenuCanceled(PopupMenuEvent e) {
-					}
-
-					@Override
-					public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-						JComboBox<String> source = (JComboBox<String>) e.getSource();
-						String text = (String) source.getSelectedItem();
-						String cityName = (String) source.getSelectedItem();
-						if (text.contains(",")) {
-							String[] splitText = text.split(",");
-							cityName = splitText[0];
-						}
-						if (model.getListOfCities().contains(cityName)) {
-							model.getWeatherForecast().setLocation(text);
-							view.weatherScreen.updateLocation();
-						} else {
-							JOptionPane.showMessageDialog(view.frame, "Sorry, that location either does not exist or is not supported at this time.");
-						}
-						model.getWeatherForecast().setLocation(text);
-						if(model.getWeatherForecast().isValidLocation()){
-							view.weatherScreen.updateLocation();
-						}
-						else{
-							JOptionPane.showMessageDialog(view.frame, "Sorry, couldn't find that location!");
-						}
-					}
-				});
-	}*/
 
 	public void addSearchBarActionListener(final WeatherView view){
 		view.weatherScreen.addSearchBarListener(
@@ -92,10 +53,7 @@ public class WeatherController{
 						JTextField searchBar = (JTextField) e.getSource();
 						String text = searchBar.getText();
 						model.getWeatherForecast().setLocation(text);
-						if(model.getWeatherForecast().isValidLocation()){
-							view.updateLocation();
-						}
-						else{
+						if(!model.getWeatherForecast().isValidLocation()){
 							JOptionPane.showMessageDialog(view.frame, "Sorry, couldn't find that location!");
 						}
 					}
@@ -155,7 +113,6 @@ public class WeatherController{
 				String location = textField.getText();
 				model.getWeatherForecast().setLocation(location);
 				if(model.getWeatherForecast().isValidLocation()){
-					view.updateLocation();
 					model.getSettings().setDefaultLocation(location);
 				}
 				else{
@@ -166,101 +123,13 @@ public class WeatherController{
 	}
 
 	private void addCheckBoxListeners(final WeatherView view){
-		view.settingsScreen.addCultureBoxListener(new ItemListener() {
+		view.settingsScreen.addCheckBoxListeners(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				if(e.getStateChange() == ItemEvent.SELECTED) {
-					model.getSettings().setCulture(true);
-					view.proposalGrid.updateProposalGrid();
-
-				} else {
-					model.getSettings().setCulture(false);
-					view.proposalGrid.updateProposalGrid();
-
-				};
-			}
-		});
-
-		view.settingsScreen.addEntertainmentBoxListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-					model.getSettings().setEntertainment(true);
-					view.proposalGrid.updateProposalGrid();
-
-				} else {
-					model.getSettings().setEntertainment(false);
-					view.proposalGrid.updateProposalGrid();
-
-				};
-			}
-		});
-
-		view.settingsScreen.addRelaxationBoxListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-					model.getSettings().setRelaxation(true);
-					view.proposalGrid.updateProposalGrid();
-				} else {
-					model.getSettings().setRelaxation(false);
-					view.proposalGrid.updateProposalGrid();
-				};
-			}
-		});
-
-		view.settingsScreen.addShoppingBoxListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-					model.getSettings().setShopping(true);
-					view.proposalGrid.updateProposalGrid();
-				} else {
-					model.getSettings().setShopping(false);
-					view.proposalGrid.updateProposalGrid();
-				};
-			}
-		});
-
-		view.settingsScreen.addSportBoxListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-					model.getSettings().setSport(true);
-					view.proposalGrid.updateProposalGrid();
-				} else {
-					model.getSettings().setSport(false);
-					view.proposalGrid.updateProposalGrid();
-				};
-			}
-		});
-
-		view.settingsScreen.addEatingBoxListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-					model.getSettings().setEating(true);
-					view.proposalGrid.updateProposalGrid();
-				} else {
-					model.getSettings().setEating(false);
-					view.proposalGrid.updateProposalGrid();
-				};
-			}
-		});
-
-		view.settingsScreen.addDrinkingBoxListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if(e.getStateChange() == ItemEvent.SELECTED) {
-					model.getSettings().setDrinking(true);
-					view.proposalGrid.updateProposalGrid();
-				} else {
-					model.getSettings().setDrinking(false);
-					view.proposalGrid.updateProposalGrid();
-				};
+				JCheckBox checkBox = (JCheckBox) e.getSource();
+				model.getSettings().setSetting(checkBox.getText());
 			}
 		});
 	}
-
 
 }

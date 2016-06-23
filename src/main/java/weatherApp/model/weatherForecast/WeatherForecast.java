@@ -60,19 +60,19 @@ public class WeatherForecast extends Observable implements Runnable{
 		}
 		if(weatherAPI.foundRequestedCity()) {
 			validLocation = true;
-			currentHighTemp = weatherAPI.weatherForecastList.get(0).highTemp;
-			currentLowTemp = weatherAPI.weatherForecastList.get(0).lowTemp;
-			currentWeatherDescription = weatherAPI.weatherForecastList.get(0).text;
-			currentAverageTemp = weatherAPI.weatherForecastList.get(weatherAPI.weatherForecastList.size() - 1).currentTemp;
+			currentHighTemp = weatherAPI.getWeatherForecastList().get(0).highTemp;
+			currentLowTemp = weatherAPI.getWeatherForecastList().get(0).lowTemp;
+			currentWeatherDescription = weatherAPI.getWeatherForecastList().get(0).text;
+			currentAverageTemp = weatherAPI.getWeatherForecastList().get(weatherAPI.getWeatherForecastList().size() - 1).currentTemp;
 			dayTemperatures[0] = currentAverageTemp;
 
 			for (int i = 0; i < weatherCodes.length; i++) {
-				weatherCodes[i] = weatherAPI.weatherForecastList.get(i).code;
+				weatherCodes[i] = weatherAPI.getWeatherForecastList().get(i).code;
 
 			}
 
 			for (int j = 1; j < dayTemperatures.length; j++) {
-				dayTemperatures[j] = weatherAPI.weatherForecastList.get(j).highTemp;
+				dayTemperatures[j] = weatherAPI.getWeatherForecastList().get(j).highTemp;
 			}
 
 			generateWeatherDescriptions();

@@ -7,10 +7,11 @@ import java.io.*;
 
 public class WeatherAPI
 {
-	String theWeatherRSS;
-	String theCity;
-	ArrayList<Forecast> weatherForecastList;
-	boolean validLocation;
+	private ArrayList<Forecast> weatherForecastList;
+	private boolean validLocation;
+
+	private String theWeatherRSS;
+	private String theCity;
 	
 	public class Forecast
 	{
@@ -163,6 +164,10 @@ public class WeatherAPI
 
 	boolean foundRequestedCity(){
 		return validLocation;
+	}
+
+	ArrayList<Forecast> getWeatherForecastList(){
+		return weatherForecastList;
 	}
 
 	public static void main(String[] args){

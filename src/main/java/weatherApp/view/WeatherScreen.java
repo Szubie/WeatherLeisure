@@ -45,6 +45,8 @@ public class WeatherScreen extends AppScreen implements Observer {
 
 	public WeatherScreen(WeatherModel model) {
 		this.model = model;
+		model.getWeatherForecast().addObserver(this);
+
 		String currentWeather = model.getWeatherForecast().getTodayWeather().toLowerCase();
 		int picNo = rand.nextInt(2);
 		String filePath = "weatherImages/"+currentWeather+"background"+picNo+".gif";
@@ -215,69 +217,6 @@ public class WeatherScreen extends AppScreen implements Observer {
 		imageLabel.setVisible(true);
 		return imageLabel;
 	}
-
-	/*
-
-	//Set the location to the text in the text area
-	void updateLocation() {
-
-		locationEntry.setText("search bar");
-		String currentWeather = model.getWeatherForecast().getTodayWeather().toLowerCase();
-		int picNo = rand.nextInt(2);
-		String filePath = "weatherImages/"+currentWeather+"background"+picNo+".gif";
-
-		URL url = null;
-		try{
-			url = classLoader.getResource(filePath);
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		Image backgroundImage = new ImageIcon(url).getImage();
-		this.backgroundImage = backgroundImage;
-
-		String imageExtension = ".png";
-
-		location.setText(model.getWeatherForecast().getLocation());
-		JLabel label = (JLabel) currentTemperature.getComponent(0);
-		label.setText(model.getWeatherForecast().getCurrentAverageTemp());
-
-		String high = "High: ";
-		String low = "Low: ";
-
-		String highTemp = model.getWeatherForecast().getCurrentHighTemperature();
-		String lowTemp = model.getWeatherForecast().getCurrentLowTemperature();
-
-		String fullLabel = high + highTemp + " " + low + lowTemp;
-		//Here we query weatherApp.model to retrieve the temperatures
-		Component[] tempComponents = highLowMain.getComponents();
-		JLabel highLow = (JLabel) tempComponents[0];
-		highLow.setText(fullLabel);
-		highLowMain.revalidate();
-
-		String value = model.getWeatherForecast().getCurrentWeatherDescription();
-		Component[] weatherComponents = weatherDescription.getComponents();
-		JLabel textBox = (JLabel) weatherComponents[0];
-		textBox.setText(value);
-
-		Component[] weekWeatherComponents = weekWeather.getComponents();
-		for (int i = 0; i < weekWeatherComponents.length; i++) {
-			String weatherPic = model.getWeatherForecast().getWeather(i + 1) + imageExtension;
-			JLabel weekLabel = (JLabel) weekWeatherComponents[i];
-			java.net.URL picURL = classLoader.getResource(smallImagesFolder + weatherPic);
-			weekLabel.setIcon(new ImageIcon(picURL));
-		}
-		weekWeather.revalidate();
-
-		String weatherPic = imagesFolder + model.getWeatherForecast().getTodayWeather() + imageExtension;
-		java.net.URL picURL = classLoader.getResource(weatherPic);
-		ImageIcon image = new ImageIcon(picURL);
-		Component[] weatherDisplayComponents = weatherDisplay.getComponents();
-		JLabel imageLabel = (JLabel) weatherDisplayComponents[0];
-		imageLabel.setIcon(image);
-		weatherDisplay.revalidate();
-
-	}*/
 
 	public void update(Observable obs, Object obj){
 		if(obs == model.getWeatherForecast()) {
