@@ -1,10 +1,11 @@
 package weatherApp.model.weatherForecast;
 
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.Random;
 
 
-public class WeatherForecast{
+public class WeatherForecast extends Observable implements Runnable{
 	
 	private String location;
 	private WeatherAPI weatherAPI;
@@ -75,6 +76,8 @@ public class WeatherForecast{
 			}
 
 			generateWeatherDescriptions();
+			setChanged();
+			notifyObservers();
 		}
 		else{
 			validLocation = false;
@@ -179,7 +182,8 @@ public class WeatherForecast{
 
 	public void setLocation(String location){
 		this.location = location;
-		getAPIdata(location, weatherAPI);
+		//getAPIdata(location, weatherAPI);
+		new Thread(this).start();
 	}
 
 	public boolean isValidLocation(){
@@ -192,5 +196,10 @@ public class WeatherForecast{
 		System.out.println(test.location);
 		System.out.println(test.dayTemperatures[0]);
 		System.out.println(test.currentWeatherDescription);
+	}
+
+	@Override
+	public void run() {
+		getAPIdata(location, weatherAPI);
 	}
 }

@@ -1,10 +1,8 @@
 package weatherApp.model.eventRecommender;
 
-import weatherApp.model.settings.Setting;
 import weatherApp.model.settings.UserSettings;
 import weatherApp.model.weatherForecast.WeatherForecast;
 
-import java.util.Random;
 import java.util.Collections;
 import java.util.ArrayList;
 
@@ -12,8 +10,6 @@ public class EventRecommender {
 
 	private WeatherForecast weatherForecast;
 	private UserSettings settings;
-
-	private Random rand = new Random();
 
 	//Number of suggestions per time in the day
 	private int eventsPerRow;

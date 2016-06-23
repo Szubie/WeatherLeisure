@@ -1,6 +1,6 @@
 package weatherApp.view;
 
-import weatherApp.model.WeatherViewModel;
+import weatherApp.model.WeatherModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Created by Benjy on 07/06/2016.
  */
 public class ProposalGrid extends AppScreen {
-	private WeatherViewModel model;
+	private WeatherModel model;
 
 	public JPanel locationPanel;
 	public JPanel daysPanel;
@@ -24,7 +24,7 @@ public class ProposalGrid extends AppScreen {
 
 	ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
-	public ProposalGrid(WeatherViewModel model) {
+	public ProposalGrid(WeatherModel model) {
 		this.model = model;
 		this.setPreferredSize(new Dimension(WIDTH, 360));
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
