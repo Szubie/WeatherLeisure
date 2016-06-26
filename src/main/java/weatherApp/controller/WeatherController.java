@@ -53,9 +53,6 @@ public class WeatherController{
 						JTextField searchBar = (JTextField) e.getSource();
 						String text = searchBar.getText();
 						model.getWeatherForecast().setLocation(text);
-						if(!model.getWeatherForecast().isValidLocation()){
-							JOptionPane.showMessageDialog(view.frame, "Sorry, couldn't find that location!");
-						}
 					}
 				}
 		);
@@ -115,9 +112,9 @@ public class WeatherController{
 				if(model.getWeatherForecast().isValidLocation()){
 					model.getSettings().setDefaultLocation(location);
 				}
-				else{
+/*				else{
 					JOptionPane.showMessageDialog(view.frame, "Sorry, couldn't find that location!");
-				}
+				}*/
 			}
 		});
 	}

@@ -47,7 +47,6 @@ public class WeatherAPI
 		parsedLocation = parsedLocation.substring(0,parsedLocation.length()-1);
 		theWeatherRSS = getWeatherAsRSS(parsedLocation);
 		parseWeather(theWeatherRSS, city);
-		isValidLocation(city, theWeatherRSS);
 	}
 
 	void parseWeather(String weatherHTML, String city)
@@ -144,20 +143,31 @@ public class WeatherAPI
 	}
 
 	private boolean isValidLocation(String cityName, String theWeatherRSS){
-		int startIndex = 0;
-		startIndex = theWeatherRSS.indexOf("<title>Yahoo! Weather - ", startIndex);
-		startIndex = theWeatherRSS.indexOf(">", startIndex)+1;
-		int endIndex = theWeatherRSS.indexOf("</title>", startIndex);
-		String location = theWeatherRSS.substring(startIndex, endIndex);
-		location = location.substring(17,location.length());
-		String[] splitLocation = location.split(", ");
-		if(cityName.split(", ").length>1){
-			cityName = cityName.split(", ")[0];
+		try {
+			int startIndex = 0;
+
+			startIndex = theWeatherRSS.indexOf("<title>Yahoo! Weather - ", startIndex);
+			startIndex = theWeatherRSS.indexOf(">", startIndex) + 1;
+			int endIndex = theWeatherRSS.indexOf("</title>", startIndex);
+			String location = theWeatherRSS.substring(startIndex, endIndex);
+			location = location.substring(17, location.length());
+			String[] splitLocation = location.split(", ");
+			if (cityName.split(", ").length > 1) {
+				cityName = cityName.split(", ")[0];
+			}
+
+			if (splitLocation[0].equals(cityName)) {
+				return true;
+			} else {
+				if(splitLocation[0].split(" ")[0].equals(cityName)){
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
 		}
-		if(splitLocation[0].equals(cityName)){
-			return true;
-		}
-		else{
+		catch(IndexOutOfBoundsException e){
 			return false;
 		}
 	}

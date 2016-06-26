@@ -8,6 +8,7 @@ import java.util.Random;
 public class WeatherForecast extends Observable implements Runnable{
 	
 	private String location;
+	private String prospectiveLocation;
 	private WeatherAPI weatherAPI;
 	
 	private String currentHighTemp;
@@ -39,7 +40,7 @@ public class WeatherForecast extends Observable implements Runnable{
 		generateWeatherInTheDays();
 	}
 
-	private void getAPIdata(String location, WeatherAPI weatherAPI) throws IndexOutOfBoundsException{
+	private void getAPIdata(String location, WeatherAPI weatherAPI){
 		try{
 			weatherAPI.processWeatherRequest(location);
 		}
@@ -56,7 +57,6 @@ public class WeatherForecast extends Observable implements Runnable{
 		}
 		catch(IndexOutOfBoundsException e){
 			System.out.println("Out of bounds exception");
-			getAPIdata(location, weatherAPI);
 		}
 		if(weatherAPI.foundRequestedCity()) {
 			validLocation = true;
@@ -74,10 +74,7 @@ public class WeatherForecast extends Observable implements Runnable{
 			for (int j = 1; j < dayTemperatures.length; j++) {
 				dayTemperatures[j] = weatherAPI.getWeatherForecastList().get(j).highTemp;
 			}
-
 			generateWeatherDescriptions();
-			setChanged();
-			notifyObservers();
 		}
 		else{
 			validLocation = false;
@@ -181,7 +178,7 @@ public class WeatherForecast extends Observable implements Runnable{
 	}
 
 	public void setLocation(String location){
-		this.location = location;
+		this.prospectiveLocation = location;
 		//getAPIdata(location, weatherAPI);
 		new Thread(this).start();
 	}
@@ -200,6 +197,19 @@ public class WeatherForecast extends Observable implements Runnable{
 
 	@Override
 	public void run() {
-		getAPIdata(location, weatherAPI);
+		try{
+			getAPIdata(prospectiveLocation, weatherAPI);
+			//Below updating on failed locations
+			if(validLocation) {
+				location = prospectiveLocation;
+			}
+			setChanged();
+			notifyObservers();
+		}
+		catch (IndexOutOfBoundsException e){
+			validLocation = false;
+			setChanged();
+			notifyObservers();
+		}
 	}
 }
