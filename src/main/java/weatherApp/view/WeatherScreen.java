@@ -49,7 +49,14 @@ public class WeatherScreen extends AppScreen implements Observer {
 
 		String currentWeather = model.getWeatherForecast().getTodayWeather().toLowerCase();
 		int picNo = rand.nextInt(2);
-		String filePath = "weatherImages/"+currentWeather+"background"+picNo+".gif";
+		String fileExtension;
+		if(currentWeather.equals("rain")){
+			fileExtension = ".gif";
+		}
+		else{
+			fileExtension = ".jpg";
+		}
+		String filePath = "weatherImages/" + currentWeather + "background" + picNo + fileExtension;
 
 		URL url = null;
 		try {
@@ -84,7 +91,7 @@ public class WeatherScreen extends AppScreen implements Observer {
 		location.setForeground(Color.WHITE);
 		locationPanel.add(location);
 		locationPanel.setOpaque(false);
-		locationPanel.setBackground(new Color(150,150,150,150));
+		locationPanel.setBackground(new Color(75,75,75,75));
 		return locationPanel;
 	}
 
@@ -108,7 +115,7 @@ public class WeatherScreen extends AppScreen implements Observer {
 		locationEntry.setOpaque(false);
 		locationEntry.setPreferredSize(new Dimension(WIDTH ,12));
 		locationEntryPanel.add(locationEntry);
-		locationEntryPanel.setBackground(new Color(150,150,150,150));
+		locationEntryPanel.setBackground(new Color(75, 75, 75, 75));
 		locationEntryPanel.setOpaque(false);
 		return locationEntryPanel;
 	}
@@ -118,7 +125,7 @@ public class WeatherScreen extends AppScreen implements Observer {
 		JLabel temp = new JLabel(model.getWeatherForecast().getCurrentAverageTemp());
 		temp.setFont(new Font("Century Gothic", Font.BOLD, cityFont));
 		temp.setForeground(Color.WHITE);
-		currentTemperature.setBackground(new Color(150,150,150,150));
+		currentTemperature.setBackground(new Color(75, 75, 75, 75));
 		currentTemperature.add(temp, BorderLayout.NORTH);
 		currentTemperature.setOpaque(false);
 		return currentTemperature;
@@ -144,7 +151,7 @@ public class WeatherScreen extends AppScreen implements Observer {
 		weatherDisplay.setOpaque(false);
 		weatherDisplay.add(imageLabel, BorderLayout.CENTER);
 		weatherDisplay.setPreferredSize(new Dimension(WIDTH, 360));
-		weatherDisplay.setBackground(new Color(150,150,150,150));
+		weatherDisplay.setBackground(new Color(75, 75, 75, 75));
 		return weatherDisplay;
 	}
 
@@ -161,7 +168,7 @@ public class WeatherScreen extends AppScreen implements Observer {
 		highLow.setForeground(Color.WHITE);
 		highLowMain.add(highLow);
 		highLowMain.setOpaque(false);
-		highLowMain.setBackground(new Color(150,150,150,150));
+		highLowMain.setBackground(new Color(75, 75, 75, 75));
 		return highLowMain;
 	}
 
@@ -175,7 +182,7 @@ public class WeatherScreen extends AppScreen implements Observer {
 		descriptionText.setForeground(Color.WHITE);
 		weatherDescription.add(descriptionText);
 		weatherDescription.setOpaque(false);
-		weatherDescription.setBackground(new Color(150,150,150,150));
+		weatherDescription.setBackground(new Color(75, 75, 75, 75));
 
 		return weatherDescription;
 
@@ -198,7 +205,7 @@ public class WeatherScreen extends AppScreen implements Observer {
 		}
 
 		weekWeather.setOpaque(false);
-		weekWeather.setBackground(new Color(150,150,150,150));
+		weekWeather.setBackground(new Color(75, 75, 75, 75));
 
 		return weekWeather;
 	}
@@ -223,7 +230,14 @@ public class WeatherScreen extends AppScreen implements Observer {
 			locationEntry.setText("search bar");
 			String currentWeather = model.getWeatherForecast().getTodayWeather().toLowerCase();
 			int picNo = rand.nextInt(2);
-			String filePath = "weatherImages/" + currentWeather + "background" + picNo + ".gif";
+			String fileExtension;
+			if(currentWeather.equals("rain")){
+				fileExtension = ".gif";
+			}
+			else{
+				fileExtension = ".jpg";
+			}
+			String filePath = "weatherImages/" + currentWeather + "background" + picNo + fileExtension;
 
 			URL url = null;
 			try {
@@ -274,6 +288,12 @@ public class WeatherScreen extends AppScreen implements Observer {
 			JLabel imageLabel = (JLabel) weatherDisplayComponents[0];
 			imageLabel.setIcon(image);
 			weatherDisplay.revalidate();
+			this.repaint();
+			this.revalidate();
+
+			if(!model.getWeatherForecast().isValidLocation()){
+				JOptionPane.showMessageDialog(this, "Sorry, couldn't find that location!");
+			}
 		}
 	}
 
