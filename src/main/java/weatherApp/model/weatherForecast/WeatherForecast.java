@@ -3,9 +3,14 @@ package weatherApp.model.weatherForecast;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 public class WeatherForecast extends Observable implements Runnable{
+
+	private ScheduledExecutorService scheduler;
 	
 	private String location;
 	private String prospectiveLocation;
@@ -29,6 +34,7 @@ public class WeatherForecast extends Observable implements Runnable{
 
 	public WeatherForecast(String location){
 		this.location = location;
+		this.prospectiveLocation = location;
 		weatherAPI = new WeatherAPI();
 		try{
 			getAPIdata(location, weatherAPI);
@@ -38,6 +44,8 @@ public class WeatherForecast extends Observable implements Runnable{
 			getAPIdata(location, weatherAPI);
 		}
 		generateWeatherInTheDays();
+		scheduler = Executors.newScheduledThreadPool(1);
+		scheduler.scheduleAtFixedRate(this, 1, 1, TimeUnit.HOURS );
 	}
 
 	private void getAPIdata(String location, WeatherAPI weatherAPI){
@@ -79,7 +87,9 @@ public class WeatherForecast extends Observable implements Runnable{
 		else{
 			validLocation = false;
 		}
-	
+
+		setChanged();
+		notifyObservers();
 	}
 
 	public String getCurrentHighTemperature(){
@@ -203,8 +213,9 @@ public class WeatherForecast extends Observable implements Runnable{
 			if(validLocation) {
 				location = prospectiveLocation;
 			}
-			setChanged();
-			notifyObservers();
+			else{
+				prospectiveLocation = location;
+			}
 		}
 		catch (IndexOutOfBoundsException e){
 			validLocation = false;
