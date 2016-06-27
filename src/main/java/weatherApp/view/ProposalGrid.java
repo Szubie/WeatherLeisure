@@ -93,7 +93,7 @@ public class ProposalGrid extends AppScreen implements Observer {
 		this.add(daysPanel);
 		this.add(midPanel);
 		//midPanel.setBackground(Color.WHITE);
-		midPanel.setBackground(new Color(200,200,200));
+		//midPanel.setBackground(new Color(200,200,200));
 		//midPanel.setOpaque(false);
 		//this.setBackground(new Color(100,100,100,50));
 		this.setVisible(false);
