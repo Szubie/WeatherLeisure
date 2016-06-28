@@ -45,7 +45,7 @@ public class WeatherForecast extends Observable implements Runnable{
 		}
 		generateWeatherInTheDays();
 		scheduler = Executors.newScheduledThreadPool(1);
-		scheduler.scheduleAtFixedRate(this, 1, 1, TimeUnit.HOURS );
+		scheduler.scheduleAtFixedRate(this, 30, 30, TimeUnit.MINUTES);
 	}
 
 	private void getAPIdata(String location, WeatherAPI weatherAPI){
